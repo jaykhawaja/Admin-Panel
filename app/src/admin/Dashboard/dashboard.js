@@ -10,5 +10,5 @@ angular.module('myApp.adminDashboard', ['ngRoute'])
 }])
 
 .controller('adminDashboardCtrl', [function() {
-
+   $scope.hello = "oye";
 }]);

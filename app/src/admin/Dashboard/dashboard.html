@@ -1,5 +1,94 @@
-<p>This is the partial for Dashboard.</p>
-<p>
-  Showing of 'interpolate' filter:
-  {{ 'Current version is v%VERSION%.' | interpolate }}
-</p>
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+	<div class="container-fluid">
+		<div class="navbar-header">
+			<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#sidebar-collapse">
+				<span class="sr-only">Toggle navigation</span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+				<span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="#"><span>Admin</span>Panel</a>
+			<ul class="user-menu">
+				<li class="dropdown pull-right">
+					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Logout </a>
+					
+				</li>
+			</ul>
+		</div>
+						
+	</div><!-- /.container-fluid -->
+</nav>
+
+
+	<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
+		<form role="search">
+			<div class="form-group">
+				<input type="text" class="form-control" placeholder="Search">
+			</div>
+		</form>
+		<ul class="nav menu">
+			<li><a href="index.html"><svg class="glyph stroked dashboard-dial"><use xlink:href="#stroked-dashboard-dial"></use></svg> Dashboard</a></li>
+			<li><a href="login.html"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Add Admin</a></li>
+		</ul>
+	</div><!--/.sidebar-->
+
+<div ng-controller="adminDashboardCtrl">	
+<div class="col-sm-9 col-sm-offset-3 col-lg-10 col-lg-offset-2 main">			
+		<div class="row">
+			<ol class="breadcrumb">
+				<li><a href="#"><svg class="glyph stroked home"><use xlink:href="#stroked-home"></use></svg></a></li>
+				<li class="active">Dashboard</li>
+			</ol>
+		</div><!--/.row-->
+		
+		<div class="row">
+			<div class="col-lg-12">
+			  <div class="voucher-buttonPanel">
+				<button type="submit" class="btn btn-primary page-header">Add Voucher</button>
+				<button type="submit" class="btn btn-primary page-header">Add Brand</button>
+			</div>
+		  </div>
+		</div><!--/.row-->
+				
+		
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="panel panel-default">
+					<div class="panel-heading">Voucher Panel</div>
+					<div class="panel-body">
+						<table class="table" data-toggle="table" data-url="tables/data1.json"  data-show-refresh="true" data-show-toggle="true" data-show-columns="true" data-search="true" data-select-item-name="toolbar1" data-pagination="true" data-sort-name="name" data-sort-order="desc">
+						    <thead>
+						    <tr>
+						        <th data-field="state" data-checkbox="true" >Featured</th>
+						        <th data-field="id" data-sortable="true">Title</th>
+						        <th data-field="name"  data-sortable="true">Description</th>
+						        <th data-field="price" data-sortable="true">Discount</th>
+						        <th data-field="price" data-sortable="true">Expiry</th>
+						        <th data-field="price" data-sortable="true">Image</th>
+						        <th data-field="price" data-sortable="true">Brand Logo</th>
+						        <th data-field="price" data-sortable="true">Category</th>
+						    </tr>
+						    </thead>
+
+						    <tbody>
+						    	<tr>
+							      <th scope="row">{{hello}}</th>
+							      <td>Mark</td>
+							      <td>Adflkjsdfd..</td>
+							      <td>15%</td>
+							      <td>2/5/3</td>
+							      <td><a href="#">Upload</a></td>
+							      <td><a href="#">Upload</a></td>
+							      <td>Pinterest</td>
+							      <td><button type="submit" class="btn btn-sm ">Update</button></td>
+							      <td><button type="submit" class="btn btn-sm ">Delete</button></td>
+
+							    </tr>
+						    </tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div><!--/.row-->			
+	</div><!--/.main-->
+</div><!--/ ngcontroller -->

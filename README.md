@@ -4,7 +4,8 @@
 1 Clone Repo
 2 Run npm install (install npm if you do not have it installed)
 3 Run bower install (install bower if you do not have it installed)
-4 Run npm start to serve the website on port 8000
+4 Run npm install in app/bower_components/bootstrap-table/
+5 Run npm start to serve the website on port 8000
 
 Currently Working on:
 - [x] Setup Project Installations
