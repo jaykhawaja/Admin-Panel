@@ -12,9 +12,11 @@ Currently Working on:
 - [x] Setup Modules
 - [x] Login View 
 - [x] Add Admin View 
-- [ ] Dashboard View integration
+- [X] Dashboard View integration
 - [ ] Voucher Views integration
 - [ ] Brand Views integration
+- [ ] Image Upload
+- [ ] Image Preview
 
 ###### Todo User Stories:
 1- As an admin I should be able to sign in, create accounts and logout
