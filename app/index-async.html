@@ -31,8 +31,13 @@
       'bower_components/angular/angular.js',
       'bower_components/angular-route/angular-route.js',
       'app.js',
-      'view1/view1.js',
-      'view2/view2.js',
+      'src/admin/Login/login.js',
+      'src/admin/Dashboard/dashboard.js',
+      'src/admin/Add/addAdminForm.js',
+      'src/voucher/Add/addVoucherForm.js',
+      'src/voucher/Edit/editVoucherForm.js',
+      'src/brand/Add/addBrandForm.js',
+      'src/brand/Edit/editBrandForm.js',
       'components/version/version.js',
       'components/version/version-directive.js',
       'components/version/interpolate-filter.js'
@@ -46,8 +51,13 @@
 </head>
 <body ng-cloak>
   <ul class="menu">
-    <li><a href="#!/view1">view1</a></li>
-    <li><a href="#!/view2">view2</a></li>
+    <li><a href="#!/login">login</a></li>
+    <li><a href="#!/dashboard">dashboard</a></li>
+    <li><a href="#!/add_admin">Add Admin</a></li>
+    <li><a href="#!/add_voucher">Add Voucher</a></li>
+    <li><a href="#!/edit_voucher">Edit Voucher</a></li>
+    <li><a href="#!/add_brand">Add Brand</a></li>
+    <li><a href="#!/edit_brand">Edit Brand</a></li>
   </ul>
 
   <div ng-view></div>
