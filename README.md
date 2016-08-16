@@ -9,7 +9,8 @@
 Currently Working on:
 - [x] Setup Project Installations
 - [x] Setup Modules
-- [ ] Login View integration
+- [x] Login View 
+- [x] Add Admin View 
 - [ ] Dashboard View integration
 - [ ] Voucher Views integration
 - [ ] Brand Views integration
