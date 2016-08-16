@@ -9,7 +9,10 @@
 Currently Working on:
 - [x] Setup Project Installations
 - [x] Setup Modules
-- [ ] Dashboard view integration
+- [ ] Login View integration
+- [ ] Dashboard View integration
+- [ ] Voucher Views integration
+- [ ] Brand Views integration
 
 ###### Todo User Stories:
 1- As an admin I should be able to sign in, create accounts and logout
