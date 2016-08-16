@@ -1,5 +1,8 @@
 ## Voucher App Admin Panel
 
+Currently Working on:
+- [ ] Dashboard view integration
+
 ###### Todo User Stories:
 1- As an admin I should be able to sign in, create accounts and logout
 **High Level Tasks:** 
