@@ -13,7 +13,7 @@ Currently Working on:
 - [x] Login View 
 - [x] Add Admin View 
 - [X] Dashboard View integration
-- [ ] Voucher Views integration
+- [ ] Voucher Edit View integration
 - [ ] Brand Views integration
 - [ ] Image Upload
 - [ ] Image Preview
