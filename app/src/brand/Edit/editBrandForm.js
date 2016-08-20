@@ -9,6 +9,19 @@ angular.module('myApp.editBrand', ['ngRoute'])
   });
 }])
 
-.controller('editBrandFormCtrl', [function() {
+.controller('editBrandFormCtrl', ['$scope', 'editBrandService', function($scope, editBrandService) {
+	 $scope.edit = function () {
+	 	editBrandService.edit();
+	 }
+}])
+.service('editBrandService', [ '$http', function ($http){
+
+var editBrandService= function ($http) {
+	this.http_ = $http;
+}
+
+editBrandService.prototype.edit = function () {
+	console.log('edit brand');
+}
 
 }]);

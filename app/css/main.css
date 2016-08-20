@@ -2,6 +2,10 @@
 * Admin Panel Theme
 * Author: Jay Khawaja
 */
+.loginForm-btn {
+  float: right;
+}
+
 /*
 Lumino Admin Bootstrap Template
 Version 1.0

@@ -19,7 +19,7 @@
 	</div><!-- /.container-fluid -->
 </nav>
 
-	
+<div ng-controller="editBrandFormCtrl">
 	<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
 		<form role="search">
 			<div class="form-group">
@@ -27,8 +27,8 @@
 			</div>
 		</form>
 		<ul class="nav menu">
-			<li><a href="index.html"><svg class="glyph stroked dashboard-dial"><use xlink:href="#stroked-dashboard-dial"></use></svg> Dashboard</a></li>
-			<li><a href="login.html"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Add Admin</a></li>
+			<li><a ng-href="#!/dashboard"><svg class="glyph stroked dashboard-dial"><use xlink:href="#stroked-dashboard-dial"></use></svg> Dashboard</a></li>
+			<li><a ng-href="#!/add_admin"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Add Admin</a></li>
 		</ul>
 
 	</div><!--/.sidebar-->
@@ -76,3 +76,4 @@
 		</div><!-- /.row -->
 		
 	</div><!--/.main-->
+</div> <!-- /. ng-controlelr -->

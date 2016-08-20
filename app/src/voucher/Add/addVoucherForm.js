@@ -8,7 +8,18 @@ angular.module('myApp.addVoucher', ['ngRoute'])
     controller: 'addVoucherFormCtrl'
   });
 }])
+.controller('addVoucherFormCtrl', ['$scope', 'addVoucherService', function($scope, addVoucherService) {
+	   $scope.add = function () {
+	   	 	addVoucherService.add();
+	   }
+}])
+.service('addVoucherService', ['$http', function ($http) {
+	var addVoucherService = function () {
+		this.http_ = $http;
+	};
 
-.controller('addVoucherFormCtrl', [function() {
+	addVoucherService.prototype.add = function () {
+		console.log('add voucher form');
+	}
 
 }]);

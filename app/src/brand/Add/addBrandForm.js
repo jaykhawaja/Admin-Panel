@@ -8,7 +8,17 @@ angular.module('myApp.addBrand', ['ngRoute'])
     controller: 'addBrandFormCtrl'
   });
 }])
+.controller('addBrandFormCtrl', ['$scope', 'addBrandService', function($scope, addBrandService) {
+	$scope.create = function () {
+		addBrandService.create();
+	};
+}])
+.service('addBrandService', [ '$http', function ($http){
+	var addBrandService = function ($http) {
+		this.http_ = $http;
+	}
 
-.controller('addBrandFormCtrl', [function() {
-
-}]);
+	addBrandService.prototype.create = function () {
+		console.log('create brand');
+	}
+}])

@@ -7,6 +7,7 @@ angular.module('myApp', [
   'myApp.adminDashboard',
   'myApp.adminAdd',
   'myApp.addVoucher',
+  'myApp.deleteVoucher',
   'myApp.editVoucher',
   'myApp.addBrand',
   'myApp.editBrand',
