@@ -11,6 +11,7 @@ angular.module('myApp', [
   'myApp.editVoucher',
   'myApp.addBrand',
   'myApp.editBrand',
+  'myApp.auth',
   'myApp.version'
 ]).
 config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {

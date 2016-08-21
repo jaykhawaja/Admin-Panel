@@ -13,7 +13,7 @@ angular.module('myApp.adminLogin', ['ngRoute'])
     controller: 'LoginCtrl'
   });
 }])
-.controller('LoginCtrl', ['$scope', '$http', '$window','loginControllerService', function($scope, $http, $window, loginControllerService) {
+.controller('LoginCtrl', ['$scope', '$http', '$window','loginControllerService', 'authService', function($scope, $http, $window, loginControllerService, authService) {
 		/*
 		* Model to store and send login data
 		*/
@@ -38,9 +38,8 @@ angular.module('myApp.adminLogin', ['ngRoute'])
 						  if (res.status == true) {
 		                	 $window.sessionStorage['token'] = res.data.token;
 				             $http.defaults.headers.common['Authorization'] = 'Bearer ' + $window.sessionStorage['token'];
+			                 authService.isLoggedIn = true;
 		                     $window.location.href = '#!/dashboard';
-			                // todo:
-			                // authService.isLoggedIn = true;
 						 		
 						  };
 					  }

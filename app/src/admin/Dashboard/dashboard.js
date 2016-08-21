@@ -12,7 +12,10 @@ angular.module('myApp.adminDashboard', ['ngRoute'])
     controller: 'adminDashboardCtrl'
   });
 }])
-.controller('adminDashboardCtrl', ['$scope', '$window', 'adminDashboardService', function($scope, $window, adminDashboardService) {
+.controller('adminDashboardCtrl', ['$scope', '$window', 'adminDashboardService', 'authService', function($scope, $window, adminDashboardService, authService) {
+   
+   authService.isUserLoggedIn();
+
    var getVouchers  = function() {
    		adminDashboardService.getVouchers();
    }
