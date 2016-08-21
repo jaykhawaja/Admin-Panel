@@ -11,10 +11,16 @@ Currently Working on:
 - [x] Setup Project Installations
 - [x] Setup Modules
 - [x] Login View 
+- [x] Login Controller + Service
 - [x] Add Admin View 
+- [x] Admin Controller + Service 
 - [X] Dashboard View integration
-- [ ] Voucher Edit View integration
-- [ ] Brand Views integration
+- [ ] Dashboard Controller
+- [X] Auth Service Management
+- [X] Voucher Edit View integration
+- [ ] Voucher Edit Controller + Service
+- [X] Brand Views integration
+- [ ] Brand Controller + Service
 - [ ] Image Upload
 - [ ] Image Preview
 
