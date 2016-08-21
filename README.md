@@ -15,7 +15,7 @@ Currently Working on:
 - [x] Add Admin View 
 - [x] Admin Controller + Service 
 - [X] Dashboard View integration
-- [ ] Dashboard Controller
+- [X] Dashboard Controller
 - [X] Auth Service Management
 - [X] Voucher Edit View integration
 - [ ] Voucher Edit Controller + Service
@@ -23,6 +23,7 @@ Currently Working on:
 - [ ] Brand Controller + Service
 - [ ] Image Upload
 - [ ] Image Preview
+- [ ] Add edit and delete option in voucher dashboard
 
 ###### Todo User Stories:
 1- As an admin I should be able to sign in, create accounts and logout
@@ -38,7 +39,7 @@ Currently Working on:
 -Setup Voucher Module
 -Voucher Dashboard Page
 -Voucher Add Page
--Voucher update page
+-Voucher Update page
 
 3-As an admin I should be able to add a brand so the vouchers can be categorized
 **High Level Tasks:** 

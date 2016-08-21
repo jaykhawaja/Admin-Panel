@@ -14,6 +14,8 @@ angular.module('myApp.adminLogin', ['ngRoute'])
   });
 }])
 .controller('LoginCtrl', ['$scope', '$http', '$window','loginControllerService', 'authService', function($scope, $http, $window, loginControllerService, authService) {
+		
+ 		
 		/*
 		* Model to store and send login data
 		*/
@@ -29,14 +31,15 @@ angular.module('myApp.adminLogin', ['ngRoute'])
 	
 			if (angular.isObject(model)) {
 
-					console.log ('login model', model);
+
 					loginControllerService.login(model)
 					.success(function(res, headers, status, config){
-						console.log("success response", res);
+
 
 						if (angular.isObject(res)) {
 						  if (res.status == true) {
 		                	 $window.sessionStorage['token'] = res.data.token;
+		                	 $window.sessionStorage['source_id'] = res.data.source_id;
 				             $http.defaults.headers.common['Authorization'] = 'Bearer ' + $window.sessionStorage['token'];
 			                 authService.isLoggedIn = true;
 		                     $window.location.href = '#!/dashboard';
@@ -45,7 +48,7 @@ angular.module('myApp.adminLogin', ['ngRoute'])
 					  }
 					})
 					.error(function(res, headers, status, config){
-						console.log("error response", res);
+
 						if (angular.isObject(res)) {
 							if (res.status == false) {
 								var msg = res.message || ""; 

@@ -4,7 +4,7 @@ angular.module('myApp.auth', [])
 .controller('authController', [function () {
 
 }])
-.service('authService', ['$window', function($window){
+.service('authService', [ function(){
 
   this.isLoggedIn = false;
 

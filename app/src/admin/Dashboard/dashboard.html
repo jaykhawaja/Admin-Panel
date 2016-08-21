@@ -56,21 +56,25 @@
 				<div class="panel panel-default">
 					<div class="panel-heading">Voucher Panel</div>
 					<div class="panel-body">
-						<table class="table" data-toggle="table" data-url="tables/data1.json"  data-show-refresh="true" data-show-toggle="true" data-show-columns="true" data-search="true" data-select-item-name="toolbar1" data-pagination="true" data-sort-name="name" data-sort-order="desc">
+						<table class="table" data-toggle="table"   data-show-refresh="true" data-show-toggle="true" data-show-columns="true" data-search="true" data-select-item-name="toolbar1" data-pagination="true" data-sort-name="name" data-sort-order="desc">
 						    <thead>
 						    <tr>
-						        <th data-field="state" data-checkbox="true" >Featured</th>
-						        <th data-field="id" data-sortable="true">Title</th>
-						        <th data-field="name"  data-sortable="true">Description</th>
-						        <th data-field="price" data-sortable="true">Discount</th>
-						        <th data-field="price" data-sortable="true">Expiry</th>
-						        <th data-field="price" data-sortable="true">Image</th>
-						        <th data-field="price" data-sortable="true">Brand Logo</th>
-						        <th data-field="price" data-sortable="true">Category</th>
+						        <th data-field="featured" data-checkbox="featured" >Featured</th>
+						        <th data-field="brand.name" data-sortable="true">Brand Name</th>
+						        <th data-field="product.name" data-sortable="true">Product Title</th>
+						        <th data-field="product.description"  data-sortable="true">Description</th>
+						        <th data-field="product.location.address" data-sortable="true">Address</th>
+						        <th data-field="discount.value" data-sortable="true">Discount</th>
+						        <th data-field="discount.symbol" data-sortable="true">Symbol</th>
+						        <th data-field="expiry" data-sortable="true">Expiry</th>
+						        <!-- <th data-field="product.image" data-formatter="imageFormatter">Image</th> -->
+						        <!-- <th data-field="" data-sortable="true">Brand Logo</th>  -->
+						        <th data-field="category" data-sortable="true">Category</th>
+						        <th data-field="city" data-sortable="true">City</th>
 						    </tr>
 						    </thead>
 
-						    <tbody>
+						    <!-- <tbody>
 						    	<tr>
 							      <th scope="row">
   <label><input type="checkbox" value=""></label></th>
@@ -84,9 +88,9 @@
 							      	<td><button  class="btn btn-sm " ng-click="redirectToUpdateVoucher()">Update</button></td>
 							      <div ng-controller="deleteVoucherCtrl">
 							      	<td><button  class="btn btn-sm btn-danger" ng-click="deleteVoucher()">delete</button></td>
-							      </div> <!-- / ng-controller deleteVouhcerCtrl -->
+							      </div> 
 							    </tr>
-						    </tbody>
+						    </tbody> -->
 						</table>
 					</div>
 				</div>

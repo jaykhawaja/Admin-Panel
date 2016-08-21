@@ -7,8 +7,12 @@ angular.module('myApp.adminAdd', ['ngRoute'])
     controller: 'adminAddCtrl'
   });
 }])
-.controller('adminAddCtrl', ['$scope','adminAddService', function($scope, adminAddService) {
+.controller('adminAddCtrl', ['$scope','adminAddService', 'authService'. , function($scope, adminAddService, authService) {
   	
+    // if (authService.isUserLoggedIn() === false) {
+    //     $window.location.href = "#!/login";
+    // }
+
   	$scope.add = function() {
   		console.log('login received');
   		adminAddservice.add();
@@ -17,14 +21,10 @@ angular.module('myApp.adminAdd', ['ngRoute'])
 }])
 .service('adminAddService', ['$http', function($http){
 
-var adminAddService = function () 
+this.adminAddService = function () 
 {
-	this.http_ = $http;
+  console.log('admin service');
 };
 
-adminAddService.prototype.add = function () 
-{
-   console.log('admin service add');
-}
 
 }]);
