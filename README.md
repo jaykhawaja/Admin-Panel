@@ -8,6 +8,9 @@
 5 Run npm start to serve the website on port 8000
 
 Currently Working on:
+- [ ] Image Upload
+
+Done:
 - [x] Setup Project Installations
 - [x] Setup Modules
 - [x] Login View 
@@ -20,14 +23,15 @@ Currently Working on:
 - [X] Voucher Edit View integration
 - [ ] Voucher Edit Controller + Service
 - [X] Brand Views integration
-- [ ] Brand Controller + Service
-- [ ] Image Upload
-- [ ] Image Preview
+- [X] Brand Controller + Service
+- [~] Image Upload
+- [X] Image Preview
+- [ ] Token interceptor integration
 - [ ] Add edit and delete option in voucher dashboard
 
-###### Todo User Stories:
+###### High level User Stories:
 1- As an admin I should be able to sign in, create accounts and logout
-**High Level Tasks:** 
+**High Sub Tasks:** 
 -Setup Admin Module
 -Admin Add Page 
 -Login View
@@ -35,7 +39,7 @@ Currently Working on:
 
 2-As an admin I should be able to create / update / delete vouchers 
 
-**High Level Tasks:** 
+**High Level Sub Tasks:** 
 -Setup Voucher Module
 -Voucher Dashboard Page
 -Voucher Add Page

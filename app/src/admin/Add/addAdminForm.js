@@ -1,4 +1,8 @@
-'use strict';
+/**
+* @fileoverview - Add Admin
+* @author - Jay Khawaja
+*/
+"use strict";
 
 angular.module('myApp.adminAdd', ['ngRoute'])
 .config(['$routeProvider', function($routeProvider) {
@@ -7,24 +11,58 @@ angular.module('myApp.adminAdd', ['ngRoute'])
     controller: 'adminAddCtrl'
   });
 }])
-.controller('adminAddCtrl', ['$scope','adminAddService', 'authService'. , function($scope, adminAddService, authService) {
+.controller('adminAddCtrl', ['$scope','adminAddService', 'authService', function($scope, adminAddService, authService) {
   	
     // if (authService.isUserLoggedIn() === false) {
     //     $window.location.href = "#!/login";
     // }
 
-  	$scope.add = function() {
-  		console.log('login received');
-  		adminAddservice.add();
+    $scope.success = "";
+    $scope.error = "";
+
+    $scope.adminAddModel = {
+          email : "",
+          password :""
+    }
+
+  	$scope.add = function(model) {
+      console.log('add model', model);
+      if (angular.isObject(model)) {
+  		  adminAddService.add(model)
+        .success(function(res, headers, status, config) {
+            console.log('success res', res);
+            if (res.status == true) {
+               $scope.success = "Admin Successfully added";
+            }
+        })
+        .error(function(res, headers, status, config) {
+          console.log('error res', res);
+          if (res.status == false) {
+            $scope.error = "There seems to be problem. Please try again later";
+          } 
+        })
+      }
 
   	}
 }])
-.service('adminAddService', ['$http', function($http){
+.service('adminAddService', ['$http' ,'$window', function($http, $window){
 
-this.adminAddService = function () 
+this.add = function (model) 
 {
-  console.log('admin service');
+      return $http.post(ADMIN_ADD_API_URL, model, URLheaders)
 };
+var URLheaders = {
 
+        /**@const */    
+        headers: 
+        { 
+            'Content-Type': 'application/json',
+            'token': $window.sessionStorage['token'],
+            'source_id': $window.sessionStorage['source_id']
+        }
+        
+     };
+
+  var ADMIN_ADD_API_URL = 'https://book-of-vouchers.herokuapp.com/api/v1/sign_up/admin';
 
 }]);

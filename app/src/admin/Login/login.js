@@ -40,7 +40,7 @@ angular.module('myApp.adminLogin', ['ngRoute'])
 						  if (res.status == true) {
 		                	 $window.sessionStorage['token'] = res.data.token;
 		                	 $window.sessionStorage['source_id'] = res.data.source_id;
-				             $http.defaults.headers.common['Authorization'] = 'Bearer ' + $window.sessionStorage['token'];
+				            $http.defaults.headers.common['Authorization'] = 'Bearer ' + $window.sessionStorage['token'];
 			                 authService.isLoggedIn = true;
 		                     $window.location.href = '#!/dashboard';
 						 		

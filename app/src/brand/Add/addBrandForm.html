@@ -21,14 +21,10 @@
 
 <div ng-controller='addBrandFormCtrl'>
 	<div id="sidebar-collapse" class="col-sm-3 col-lg-2 sidebar">
-		<form role="search">
-			<div class="form-group">
-				<input type="text" class="form-control" placeholder="Search">
-			</div>
-		</form>
 		<ul class="nav menu">
-			<li><a ng-href="#!/dashboard"><svg class="glyph stroked dashboard-dial"><use xlink:href="#stroked-dashboard-dial"></use></svg> Dashboard</a></li>
-			<li><a ng-href="#!/add_admin"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Add Admin</a></li>
+			<li><a href="#!/dashboard.html"><svg class="glyph stroked dashboard-dial"><use xlink:href="#stroked-dashboard-dial"></use></svg> Dashboard</a></li>
+			<li><a href="#!/add_admin.html"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Add Admin</a></li>
+			<li><a href="#!/add_brand.html"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Add Brand</a></li>
 		</ul>
 
 	</div><!--/.sidebar-->
@@ -51,22 +47,52 @@
 		<div class="row">
 			<div class="col-lg-6">
 				<div class="panel panel-default">
+						<button type="submit" class="btn btn-primary btn-md brand-button" ng-click="create( brandModel, picFile)">Create</button>
 					<div class="panel-heading">Create a new Brand</div>
 					<div class="panel-body">
 						<div class="col-md-12">
-							<form role="form">
+							<form role="form" name="brandForm">
+							 <p class="brand-success" ng-bind="success"></p>
+							 <p class="brand-error" ng-bind="error"></p>
 							
 								<div class="form-group">
-									<label>Brand Title</label>
-									<input class="form-control" placeholder="user@example.com">
+									<label>Title</label>
+									<input class="form-control" placeholder="e.g. Burger King" ng-model="brandModel.name">
 								</div>
 																
-								<div class="form-group">
-									<label>Upload a image:</label>
-									<input type="file">
+							<div class="form-group">	
+										
+
+								<!-- https://github.com/danialfarid/ng-file-upload -->
+								   <label>Image</label>
+								   <br>
+								   <img ngf-src="picFile">
+								   <div 
+								   class="btn btn-default btn-md"
+								   name="file"
+								   type="file"
+								   ng-model="picFile"
+								   ngf-accept="'image/*'"
+								   ngf-select
+								   ngf-max-size="20MB" 
+   								   ngf-resize="{width: 100, height: 100}"
+   								   required
+								   >Select</div>	
+								   <i ng-show="brandForm.file.$error.required">*No file chosen</i>
+
+								   <button class="btn btn-danger" ng-click="picFile = null" ng-show="picFile">Remove</button>
+      								<i ng-show="brandForm.file.$error.maxSize">File too large 
+        							  {{errorFile.size / 1000000|number:1}}MB: max 2M</i>	
+						
+
+								    <span class="brand-progress" ng-show="picFile.progress >= 0">
+       									 <div style="width:{{picFile.progress}}%" 
+      							      ng-bind="picFile.progress + '%'"></div>
+    								  </span>
+     								<span ng-show="picFile.result">Upload Successful</span>
+    								<span class="err" ng-show="errorMsg">{{errorMsg}}</span>
+
 								</div>
-								
-								<button type="submit" class="btn btn-primary" ng-click="create()">Create</button>
 								
 								
 						</form>

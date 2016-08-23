@@ -23,11 +23,6 @@ angular.module('myApp.adminDashboard', ['ngRoute'])
     //     $window.location.href = "#!/login";
     // }
     
-    //todo: does not work
-    $scope.imageFormatter = function () {
-        return '<img src="holder.js/100x150">';
-    }
-
 
   // Stores the vouchers for display
    $scope.voucherList;

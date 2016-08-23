@@ -3,6 +3,7 @@
 // Declare app level module which depends on views, and components init
 angular.module('myApp', [
   'ngRoute',
+  'ngFileUpload',
   'myApp.adminLogin',
   'myApp.adminDashboard',
   'myApp.adminAdd',

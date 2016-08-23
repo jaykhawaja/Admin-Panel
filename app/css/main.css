@@ -999,14 +999,46 @@ h1.page-header {
   margin-bottom: 20px;
 }
 
-.voucher-button {
+.voucher-button, .brand-button {
   float: right;
   margin: 6px;
   width: 10em;
 }
+.voucher-success, .brand-success {
+  color: #44C662;
+}
+.voucher-error, .brand-error {
+  color: #C9182B;
+}
+.voucher-progress, .brand-progress {
+  background-color: #44C662;
+}
 
 .panel-default .panel-heading {
   padding-right: 20px;
+}
+
+.voucher-button, .brand-button {
+  float: right;
+  margin: 6px;
+  width: 10em;
+}
+.voucher-success, .brand-success {
+  color: #44C662;
+}
+.voucher-error, .brand-error {
+  color: #C9182B;
+}
+.voucher-progress, .brand-progress {
+  background-color: #44C662;
+}
+
+.panel-default .panel-heading {
+  padding-right: 20px;
+}
+
+.brand-button {
+  margin: 15px;
 }
 
 /*# sourceMappingURL=main.css.map */
