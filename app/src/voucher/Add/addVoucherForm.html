@@ -165,22 +165,29 @@
 										</div>
 
 
-									<div class="form-group">
 										<label>Expiration</label>
+									<div class="form-group input-group date">
 										<input 
-										type="date" 
+										data-provide="datepicker"
 										class="form-control" 
 										ng-model="VoucherDataModel.voucher.expiry"
 										required>
+								    <div class="input-group-addon">
+								        <span class="glyphicon glyphicon-th"></span>
+								    </div>
+
 									</div>
 
-									<div class="form-group">
 										<label>Validity</label>
+									<div class="form-group  input-group date">
 										<input 
-										type="date" 
+										data-provide="datepicker"
 										class="form-control" 
 										ng-model="VoucherDataModel.voucher.valid"
 										required>
+										    <div class="input-group-addon">
+									        <span class="glyphicon glyphicon-th"></span>
+									    </div>
 									</div>
 
 									<div class="form-group">
