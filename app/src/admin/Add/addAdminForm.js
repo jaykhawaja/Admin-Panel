@@ -13,9 +13,9 @@ angular.module('myApp.adminAdd', ['ngRoute'])
 }])
 .controller('adminAddCtrl', ['$scope','adminAddService', 'authService', function($scope, adminAddService, authService) {
   	
-    // if (authService.isUserLoggedIn() === false) {
-    //     $window.location.href = "#!/login";
-    // }
+    if (authService.isUserLoggedIn() === false) {
+        $window.location.href = "#!/login";
+    }
 
     $scope.success = "";
     $scope.error = "";

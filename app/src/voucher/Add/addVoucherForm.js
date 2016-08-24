@@ -12,15 +12,16 @@ angular.module('myApp.addVoucher', ['ngRoute'])
     controller: 'addVoucherFormCtrl'
   });
 }])
-.controller('addVoucherFormCtrl', ['$scope', '$window', '$timeout' , 'authService', 'Upload', function($scope, $window, $timeout,  authService, Upload) {
-         // if (authService.isUserLoggedIn() === false) {
+.controller('addVoucherFormCtrl', ['$scope', '$window', '$timeout' , 'authService', 'Upload', 'addVoucherService', function($scope, $window, $timeout,  authService, Upload, addVoucherService) {
+      //    if (authService.isUserLoggedIn() === false) {
 	     //     $window.location.href = "#!/login";
-		 // }
+		    // };
 
      // TODO GET BRANDS AND INJECT IN DROP DOWN
     	
        $scope.success = "";
        $scope.error = "";
+       $scope.brands = "";
 
        $scope.VoucherDataModel = {
           voucher : {
@@ -94,5 +95,37 @@ angular.module('myApp.addVoucher', ['ngRoute'])
           }); 
       }
 
+      //get brands to add to the brand selection
+      addVoucherService.getBrands()
+      .success(function(res, headers, status, config) {
+         console.log('brands res is', res);
+         if (res.status === true){
+             if (res.data.brands.length > 0) {
+                $scope.brands = res.data.brands;
+             }
+         }
+      })
+      .error(function(res, headers, status, config){
+        console.log('brands err res is', res);
+      });
 
+
+}])
+.service('addVoucherService', ['$http', '$window', function($http, $window) {
+  this.getBrands = function () {
+    return $http.get(GET_BRANDS_URL, URLheaders);
+  };
+
+  var URLheaders = {
+
+        /**@const */    
+        headers: 
+        { 
+            'token': $window.sessionStorage['token'],
+            'source_id': $window.sessionStorage['source_id']
+        }
+        
+     };
+
+  var GET_BRANDS_URL = 'https://book-of-vouchers.herokuapp.com/api/v1/admin/brands';
 }])

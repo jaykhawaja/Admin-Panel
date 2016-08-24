@@ -19,9 +19,9 @@ angular.module('myApp.adminDashboard', ['ngRoute'])
    $scope.error = "";
     // todo: test its
     // add token interceptor
-    // if (authService.isUserLoggedIn() === false) {
-    //     $window.location.href = "#!/login";
-    // }
+    if (authService.isUserLoggedIn() === false) {
+        $window.location.href = "#!/login";
+    }
     
 
   // Stores the vouchers for display
