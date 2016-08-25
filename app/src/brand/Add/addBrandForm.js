@@ -4,7 +4,7 @@ angular.module('myApp.addBrand', ['ngRoute'])
 
 .config(['$routeProvider', function($routeProvider) {
   $routeProvider.when('/add_brand', {
-    templateUrl: 'src/brand/Add/addBrandForm.html',
+    templateUrl: 'app/src/brand/Add/addBrandForm.html',
     controller: 'addBrandFormCtrl'
   });
 }])
