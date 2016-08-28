@@ -11,11 +11,11 @@ angular.module('myApp.adminAdd', ['ngRoute'])
     controller: 'adminAddCtrl'
   });
 }])
-.controller('adminAddCtrl', ['$scope','adminAddService', 'authService', function($scope, adminAddService, authService) {
+.controller('adminAddCtrl', ['$scope', '$window', 'adminAddService', 'authService', function($scope, $window, adminAddService, authService) {
   	
-    if (authService.isUserLoggedIn() === false) {
-        $window.location.href = "#!/login";
-    }
+    // if (authService.isUserLoggedIn() === false) {
+    //     $window.location.href = "#!/login";
+    // }
 
     $scope.success = "";
     $scope.error = "";
@@ -39,6 +39,8 @@ angular.module('myApp.adminAdd', ['ngRoute'])
           console.log('error res', res);
           if (res.status == false) {
             $scope.error = "There seems to be problem. Please try again later";
+          } else {
+            $scope.error = "Sorry cannot reach the server at the moment";
           } 
         })
       }

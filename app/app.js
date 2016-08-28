@@ -4,6 +4,7 @@
 angular.module('myApp', [
   'ngRoute',
   'ngFileUpload',
+  'cloudinary',
   'myApp.adminLogin',
   'myApp.adminDashboard',
   'myApp.adminAdd',
@@ -13,7 +14,7 @@ angular.module('myApp', [
   'myApp.addBrand',
   'myApp.editBrand',
   'myApp.auth',
-  // 'myApp.tokenInterceptor',
+  'myApp.tokenInterceptor',
   'myApp.version'
 ])
 .config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {

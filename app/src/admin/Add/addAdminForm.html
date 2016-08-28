@@ -10,7 +10,9 @@
 			<a class="navbar-brand" href="#"><span>Admin</span>Panel</a>
 			<ul class="user-menu">
 				<li class="dropdown pull-right">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Logout </a>
+					<div ng-controller="authController">
+					<button class="btn btn-default btn-sm" data-toggle="dropdown" ng-click="logout()"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Logout </button>
+					</div>
 					
 				</li>
 			</ul>

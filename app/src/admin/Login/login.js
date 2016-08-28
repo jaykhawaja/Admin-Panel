@@ -78,4 +78,4 @@ angular.module('myApp.adminLogin', ['ngRoute'])
      };
 
 	var LOGIN_API_URL = 'https://book-of-vouchers.herokuapp.com/api/v1/sign_in/admin';
-}]);
+}])

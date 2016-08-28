@@ -9,12 +9,12 @@ angular.module('myApp.editVoucher', ['ngRoute'])
   });
 }])
 
-.controller('editVoucherFormCtrl', ['$scope', 'editVoucherService', function($scope, editVoucherService) {
+.controller('editVoucherFormCtrl', ['$scope' ,'$window' , 'editVoucherService', function($scope, $window, editVoucherService) {
 	$scope.edit = function () {
 		editVoucherService.edit();
 	}
 }])
-.service('editVoucherService', ['$http', function ($http) {
+.service('editVoucherService', ['$http' , '$window', function ($http, $window) {
 	var editVoucherService = function () {
 		this.http_ = $http;
 	};

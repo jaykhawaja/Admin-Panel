@@ -10,7 +10,9 @@
 			<a class="navbar-brand" href="#"><span>Admin</span>Panel</a>
 			<ul class="user-menu">
 				<li class="dropdown pull-right">
-					<a href="#" class="dropdown-toggle" data-toggle="dropdown"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Logout </a>
+				 <div ng-controller="authController">
+					<button class="btn btn-default btn-sm" data-toggle="dropdown" ng-click="logout()"><svg class="glyph stroked male-user"><use xlink:href="#stroked-male-user"></use></svg> Logout </button>
+					</div>
 					
 				</li>
 			</ul>
@@ -47,7 +49,7 @@
 		<div class="row">
 			<div class="col-lg-6">
 				<div class="panel panel-default">
-						<button type="submit" class="btn btn-primary btn-md brand-button" ng-click="create( brandModel, picFile)">Create</button>
+						<button type="submit" class="btn btn-primary btn-md brand-button" ng-click="submit(brandModel)">Create</button>
 					<div class="panel-heading">Create a new Brand</div>
 					<div class="panel-body">
 						<div class="col-md-12">
@@ -57,7 +59,7 @@
 							
 								<div class="form-group">
 									<label>Title</label>
-									<input class="form-control" placeholder="e.g. Burger King" ng-model="brandModel.name">
+									<input class="form-control" placeholder="e.g. Burger King" ng-model="brandModel.brand.name">
 								</div>
 																
 							<div class="form-group">	
@@ -66,31 +68,29 @@
 								<!-- https://github.com/danialfarid/ng-file-upload -->
 								   <label>Image</label>
 								   <br>
-								   <img ngf-src="picFile">
+								   <img ngf-src="files">
 								   <div 
 								   class="btn btn-default btn-md"
 								   name="file"
 								   type="file"
-								   ng-model="picFile"
+								   ng-model="files"
 								   ngf-accept="'image/*'"
-								   ngf-select
+								   ngf-select="uploadFile($files)"
 								   ngf-max-size="20MB" 
    								   ngf-resize="{width: 100, height: 100}"
    								   required
 								   >Select</div>	
 								   <i ng-show="brandForm.file.$error.required">*No file chosen</i>
 
-								   <button class="btn btn-danger" ng-click="picFile = null" ng-show="picFile">Remove</button>
+								   <button class="btn btn-danger" ng-click="files = null" ng-show="files">Remove</button>
       								<i ng-show="brandForm.file.$error.maxSize">File too large 
         							  {{errorFile.size / 1000000|number:1}}MB: max 2M</i>	
 						
 
-								    <span class="brand-progress" ng-show="picFile.progress >= 0">
-       									 <div style="width:{{picFile.progress}}%" 
-      							      ng-bind="picFile.progress + '%'"></div>
+								    <span class="brand-progress" ng-show="files.progress >= 0">
+       									<div class="status">{{files.status}}</div>
     								  </span>
-     								<span ng-show="picFile.result">Upload Successful</span>
-    								<span class="err" ng-show="errorMsg">{{errorMsg}}</span>
+     								<span ng-show="files.result">Upload Successful</span>
 
 								</div>
 								
