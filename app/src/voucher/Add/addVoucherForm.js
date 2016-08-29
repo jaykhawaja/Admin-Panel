@@ -55,8 +55,8 @@ angular.module('myApp.addVoucher', ['ngRoute'])
                       }
                   },
               "image": {
-                  "id": "CLOUDINARY_ID_GOES_HERE",
-                  "url": "CLOUDNARY_SECURE_URL_GOES_HERE"
+                  "id": "",
+                  "url": ""
               }
           };
 

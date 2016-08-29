@@ -38,6 +38,7 @@ angular.module('myApp.adminDashboard', ['ngRoute'])
                $('.table').bootstrapTable({
                     data: res.data.vouchers
               }); 
+               console.log('res vouchers', res.data.vouchers);
             } else {
                $scope.success = "0 vouchers returned";
             }
