@@ -14,14 +14,14 @@ angular.module('myApp.adminDashboard', ['ngRoute'])
 }])
 .controller('adminDashboardCtrl', ['$scope', '$window', 'adminDashboardService', 'authService', function($scope, $window, adminDashboardService, authService) {
    
-
+  console.log('window session storage token is',  $window.sessionStorage['token']);
    $scope.success = "";
    $scope.error = "";
     // todo: test its
-    // add token interceptor
-    // if (authService.isUserLoggedIn() === false) {
-    //     $window.location.href = "#!/login";
-    // }
+    // TDODO: add token interceptor
+     if (!!!authService.isUserLoggedIn()) {
+       $window.location.href = "#!/login";
+    };
     
 
   // Stores the vouchers for display
@@ -31,7 +31,7 @@ angular.module('myApp.adminDashboard', ['ngRoute'])
    		
       adminDashboardService.getVouchers()
       .success(function(res, headers, status, config){
-        console.log('get vouchers', res);
+
          if (res.status === true) {
             if (res.data.vouchers.length > 0) {
                $scope.voucherList = res.data.vouchers;

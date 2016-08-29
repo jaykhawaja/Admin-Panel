@@ -59,7 +59,7 @@
 							
 								<div class="form-group">
 									<label>Title</label>
-									<input class="form-control" placeholder="e.g. Burger King" ng-model="brandModel.brand.name">
+									<input class="form-control" placeholder="e.g. Burger King" ng-model="brandModel.name">
 								</div>
 																
 							<div class="form-group">	
@@ -80,7 +80,6 @@
    								   ngf-resize="{width: 100, height: 100}"
    								   required
 								   >Select</div>	
-								   <i ng-show="brandForm.file.$error.required">*No file chosen</i>
 
 								   <button class="btn btn-danger" ng-click="files = null" ng-show="files">Remove</button>
       								<i ng-show="brandForm.file.$error.maxSize">File too large 

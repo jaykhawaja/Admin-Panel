@@ -1,5 +1,5 @@
 'use strict';
-
+//TODO: NOT INTEGRATED / IMPLEMENTED
 angular.module('myApp.tokenInterceptor', [])
 .factory('tokenService', ['$window','authService', function($window, authService){
 	return {

@@ -21,7 +21,7 @@ angular.module('myApp.auth', [])
   }
 
   this.isUserLoggedIn = function () {
-  	var token = this.getToken;
+  	var token = this.getToken();
   	if (token) {
   		this.isLoggedIn = true
   		return true;

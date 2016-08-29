@@ -14,7 +14,6 @@ angular.module('myApp', [
   'myApp.addBrand',
   'myApp.editBrand',
   'myApp.auth',
-  'myApp.tokenInterceptor',
   'myApp.version'
 ])
 .config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {

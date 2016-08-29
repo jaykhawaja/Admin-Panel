@@ -18,48 +18,47 @@ angular.module('myApp.addVoucher', ['ngRoute'])
 
 }])
 .controller('addVoucherFormCtrl', ['$scope', '$rootScope' ,'$window', '$timeout' , 'authService', 'Upload', 'cloudinary', 'addVoucherService', function($scope, $rootScope, $window, $timeout,  authService, Upload, cloudinary, addVoucherService) {
-      //    if (authService.isUserLoggedIn() === false) {
-	     //     $window.location.href = "#!/login";
-		    // };
 
-     // TODO GET BRANDS AND INJECT IN DROP DOWN
+         if (!!!authService.isUserLoggedIn()) {
+	         $window.location.href = "#!/login";
+		    };
+
     	
        $scope.success = "";
        $scope.error = "";
        $scope.brands = "";
        $scope.files = "";
+
        $scope.VoucherDataModel = {
-          voucher : {
-               brand: "",
-               product: {
-               name: "",
-               image: "",
-               description: "",
-               location: {
-                  coordinates: {
-                      longitude: "" ,
-                      latitude: ""
+              "voucher": {
+                  "brand": "",
+                  "product": {
+                      "location": {
+                          "coordinates": {
+                              "latitude": "",
+                              "longitude": ""
+                              },
+                          "address": ""
+                      },
+                      "description": "",
+                      "name": ""
                   },
-                   address: ""
-                 },
-               },
-         
-         valid: "",
-         expiry: "",
-         featured: false,
-         max_redeems: 100,
-         city: 1,
-         category: 1,
-         discount: {
-            value: 10,
-            symbol: "%"
-           },
-          image: {
-            id: "",
-            url: ""
-          }
-         }
-       };
+                  "valid": "",
+                  "expiry": "",
+                  "featured": "false",
+                  "max_redeems": "100",
+                  "city": "1",
+                  "category": "1",
+                  "discount": {
+                      "value": "10",
+                      "symbol": "%"
+                      }
+                  },
+              "image": {
+                  "id": "CLOUDINARY_ID_GOES_HERE",
+                  "url": "CLOUDNARY_SECURE_URL_GOES_HERE"
+              }
+          };
 
       var IMAGE_ADD_API_URL = "https://api.cloudinary.com/v1_1/" + cloudinary.config().cloud_name + "/upload";
       var d = new Date();
@@ -67,14 +66,12 @@ angular.module('myApp.addVoucher', ['ngRoute'])
       
       $scope.uploadFile = function (files) {
        
-        console.log('file submitted', files);
+
         $scope.files = files;
         if (!$scope.files) return;
 
         angular.forEach($scope.files, function(file){
            if (file && !file.$error) {  
-            console.log('Uploading scope title', $scope.title);
-            console.log('uploading  file', file);
             
              var CLOUDINARY_DATA = {
               upload_preset: cloudinary.config().upload_preset,
@@ -82,9 +79,6 @@ angular.module('myApp.addVoucher', ['ngRoute'])
               context: 'photo=' + $scope.title,
               file: file
             };
-
-            console.log('submiting file with data', file);
-            console.log('cloudinary data', CLOUDINARY_DATA);
 
               file.upload = Upload.upload({
                   url:  IMAGE_ADD_API_URL,
@@ -94,13 +88,11 @@ angular.module('myApp.addVoucher', ['ngRoute'])
              file.upload.then(function (response) {
                 $timeout(function () {  
                   file.result = response.data;
-                  console.log('response.data', response.data);
-                  $scope.VoucherDataModel.voucher.image.id = response.data.public_id;
-                  $scope.VoucherDataModel.voucher.image.url = response.data.secure_url;
+                  $scope.VoucherDataModel.image.id = response.data.public_id;
+                  $scope.VoucherDataModel.image.url = response.data.secure_url;
                 });
               }, function (response) {
                 if (response.status > 0)
-                  console.log('error res', response.data);
                   $scope.error = response.status + ': Sorry, cannot upload image at the moment. Please try later';
               }, function (evt) {
                 // Math.min is to fix IE which reports 200% sometimes
@@ -111,34 +103,30 @@ angular.module('myApp.addVoucher', ['ngRoute'])
         })
       }
 
-     
+      
       $scope.submit = function (model) {
-        console.log('submitted model', model);
         if (angular.isObject(model)) {
-           addVoucherService.addVoucher()
+           addVoucherService.addVoucher(model)
            .success(function(res, headers, status, config){
-              console.log('success res', res);
               if (res.status === true) {
                   $scope.success = "Voucher has been successfully added!";
+                  $window.location.href="#!/dashboard";
               };
            })
            .error(function(res, headers, status, config){
-              console.log('error res', res);
               $scope.error = "Sorry, cannot upload voucher at the moment. Please inform your web amin";
            })
         }
       }
 
-      //get brands to add to the brand selection
+      //GET BRANDS
       addVoucherService.getBrands()
       .success(function(res, headers, status, config) {
          console.log('brands res is', res);
          if (res.status === true){
              if (res.data.brands.length > 0) {
                 $scope.brands = res.data.brands;
-             } else {
-              // TODO: show No brands avaiable in the drop down
-             }
+             } 
          } else {
             $scope.error = "Sorry cannot reach the server at the moment";
           } 

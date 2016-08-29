@@ -80,14 +80,13 @@
 								</div>
 
 								<div class="form-group">
-									<label>Address 1</label>
+									<label>Address </label>
 									<input class="form-control" placeholder="e.g. #23, 235th Street, Melrose drive, Birmingham 12345 " ng-model="VoucherDataModel.voucher.product.location.address"
 									required>
 								</div>
 
 
-
-								<!-- TOD0 -->			
+											
 								<div class="form-group">
 									
 
@@ -223,23 +222,23 @@
 							</div>
 
 							<div class="col-md-3">	
-								<p>Brand Details</p>
+
 									<div class="form-group">
 										<label>Pick a Brand</label>
 										<div ng-show="brands.length == 0">
 											<p> No Brands available. <a ng-href="#!/add_brand">Add a brand</a></p>
 										</div>
-										<div ng-show="brands.lengths > 0">
+										<div ng-show="brands.length > 0">
 										<select  
-										ng-repeat="brand in brands"
 										class="form-control" 
 										ng-model="VoucherDataModel.voucher.brand">
 											
-											<option value="brand.id">{{brand.name}} </option>
+											<option ng-repeat="brand in brands" value="{{brand.id}}">{{brand.name}} </option>
 										   
 										</select>
 									</div>
 									</div>
+									<p>	{{VoucherDataModel}}</p>
 							</div>
 								
 								

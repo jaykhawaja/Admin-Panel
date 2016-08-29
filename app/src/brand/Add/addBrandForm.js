@@ -15,22 +15,22 @@ angular.module('myApp.addBrand', ['ngRoute'])
 }])
 .controller('addBrandFormCtrl', ['$scope','$window', '$timeout', 'authService', 'addBrandService', 'Upload', 'cloudinary', function($scope, $window, $timeout, authService ,addBrandService, Upload, cloudinary) {
     
-   // if (authService.isUserLoggedIn() === false) {
-   //         $window.location.href = "#!/login";
-   // };
-
+       if (!!!authService.isUserLoggedIn()) {
+         $window.location.href = "#!/login";
+      };
+      
   	$scope.success = "";
     $scope.error = "";
     $scope.files = "";
 
 	$scope.brandModel = {
-		brand: {
+		
 			name : "",
       image: {
           id: "",
           url: ""
       }
-		}
+		
 	};
 
       var IMAGE_ADD_API_URL = "https://api.cloudinary.com/v1_1/" + cloudinary.config().cloud_name + "/upload";
@@ -67,8 +67,8 @@ angular.module('myApp.addBrand', ['ngRoute'])
                 $timeout(function () {  
                   file.result = response.data;
                   console.log('response.data', response.data);
-                  $scope.brandModel.brand.image.id = response.data.public_id;
-                  $scope.brandModel.brand.image.url = response.data.secure_url;
+                  $scope.brandModel.image.id = response.data.public_id;
+                  $scope.brandModel.image.url = response.data.secure_url;
                 });
               }, function (response) {
                 if (response.status > 0)
@@ -108,7 +108,7 @@ angular.module('myApp.addBrand', ['ngRoute'])
 .service('addBrandService', [ '$http', '$window', function ($http, $window){
 
   this.addBrand = function (model) {
-    return $http.post(ADD_BRAND_URL, model, ADD_BRAND_URL_URLheaders)
+    return $http.put(ADD_BRAND_URL, model, ADD_BRAND_URL_URLheaders)
   };
 
   var ADD_BRAND_URL = "https://book-of-vouchers.herokuapp.com/api/v1/admin/add_brand";
