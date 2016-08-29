@@ -92,7 +92,6 @@ angular.module('myApp.addVoucher', ['ngRoute'])
                   $scope.VoucherDataModel.image.url = response.data.secure_url;
                 });
               }, function (response) {
-                if (response.status > 0)
                   $scope.error = response.status + ': Sorry, cannot upload image at the moment. Please try later';
               }, function (evt) {
                 // Math.min is to fix IE which reports 200% sometimes
@@ -122,7 +121,7 @@ angular.module('myApp.addVoucher', ['ngRoute'])
       //GET BRANDS
       addVoucherService.getBrands()
       .success(function(res, headers, status, config) {
-         console.log('brands res is', res);
+
          if (res.status === true){
              if (res.data.brands.length > 0) {
                 $scope.brands = res.data.brands;
