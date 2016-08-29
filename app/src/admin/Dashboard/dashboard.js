@@ -14,7 +14,7 @@ angular.module('myApp.adminDashboard', ['ngRoute'])
 }])
 .controller('adminDashboardCtrl', ['$scope', '$window', 'adminDashboardService', 'authService', function($scope, $window, adminDashboardService, authService) {
    
-  console.log('window session storage token is',  $window.sessionStorage['token']);
+ 
    $scope.success = "";
    $scope.error = "";
     // todo: test its
