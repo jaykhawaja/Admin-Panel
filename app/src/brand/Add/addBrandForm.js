@@ -39,13 +39,15 @@ angular.module('myApp.addBrand', ['ngRoute'])
       
 
   $scope.uploadFile = function (files) {
-
+   
    $scope.files = files;
     if(!$scope.files) return;
 
         angular.forEach($scope.files, function(file){
            if (file && !file.$error) {  
-
+           
+           
+            
              var CLOUDINARY_DATA = {
               upload_preset: cloudinary.config().upload_preset,
               tags: 'myphotoalbum',
@@ -53,7 +55,7 @@ angular.module('myApp.addBrand', ['ngRoute'])
               file: file
             };
 
-    
+   
 
               file.upload = Upload.upload({
                   url:  IMAGE_ADD_API_URL,
@@ -63,14 +65,14 @@ angular.module('myApp.addBrand', ['ngRoute'])
              file.upload.then(function (response) {
                 $timeout(function () {  
                   file.result = response.data;
+              
                   $scope.brandModel.image.id = response.data.public_id;
                   $scope.brandModel.image.url = response.data.secure_url;
                 });
               }, function (response) {
-                if (response.status > 0) {
-                  
+               
+                 
                   $scope.error = response.status + ': Sorry, cannot upload image at the moment. Please try later';
-                  
               }, function (evt) {
                 // Math.min is to fix IE which reports 200% sometimes
                 file.progress = Math.min(100, parseInt(100.0 * evt.loaded / evt.total));
@@ -83,17 +85,17 @@ angular.module('myApp.addBrand', ['ngRoute'])
 	};
 
   $scope.submit = function (model) {
-
+     
         if (angular.isObject(model)) {
            addBrandService.addBrand(model)
            .success(function(res, headers, status, config){
-   
+             
               if (res.status === true) {
                   $scope.success = "Voucher has been successfully added!";
               };
            })
            .error(function(res, headers, status, config){
-
+              console.log('error res', res);
               $scope.error = "Sorry, cannot upload voucher at the moment. Please inform your web amin";
            })
         
