@@ -11,11 +11,13 @@ angular.module('myApp.adminAdd', ['ngRoute'])
     controller: 'adminAddCtrl'
   });
 }])
-.controller('adminAddCtrl', ['$scope', '$window', 'adminAddService', 'authService', function($scope, $window, adminAddService, authService) {
-  	
-         if (!!!authService.isUserLoggedIn()) {
-           $window.location.href = "#!/login";
-        };
+.controller('adminAddCtrl', ['$scope', '$window','adminAddService', 'authService', function($scope, $window, adminAddService, authService) {
+  	   
+
+
+    if (!!!authService.isUserLoggedIn()) {
+       $window.location.href = "#!/login";
+    };
 
     $scope.success = "";
     $scope.error = "";
@@ -31,13 +33,13 @@ angular.module('myApp.adminAdd', ['ngRoute'])
   		  adminAddService.add(model)
         .success(function(res, headers, status, config) {
             console.log('success res', res);
-            if (res.status == true) {
+            if (res.status === true) {
                $scope.success = "Admin Successfully added";
             }
         })
         .error(function(res, headers, status, config) {
           console.log('error res', res);
-          if (res.status == false) {
+          if (res.status === false) {
             $scope.error = "There seems to be problem. Please try again later";
           } else {
             $scope.error = "Sorry cannot reach the server at the moment";
@@ -47,24 +49,31 @@ angular.module('myApp.adminAdd', ['ngRoute'])
 
   	}
 }])
-.service('adminAddService', ['$http' ,'$window', function($http, $window){
+.service('adminAddService', ['$http' ,'$window', 'authService', function($http, $window, authService){
+
+var SESSION_TOKEN, SOURCE_ID, ADMIN_ADD_API_URL, ADD_ADMIN_URLheaders;
+
+  SESSION_TOKEN = authService.getToken();
+  SOURCE_ID = authService.getSourceId();
+
 
 this.add = function (model) 
 {
-      return $http.post(ADMIN_ADD_API_URL, model, URLheaders)
+      return $http.post(ADMIN_ADD_API_URL, model, ADD_ADMIN_URLheaders);
 };
-var URLheaders = {
+
+var ADD_ADMIN_URLheaders = {
 
         /**@const */    
         headers: 
         { 
             'Content-Type': 'application/json',
-            'token': $window.sessionStorage['token'],
-            'source_id': $window.sessionStorage['source_id']
+            'token': SESSION_TOKEN,
+            'source_id': SOURCE_ID
         }
         
      };
 
-  var ADMIN_ADD_API_URL = 'https://book-of-vouchers.herokuapp.com/api/v1/sign_up/admin';
+  ADMIN_ADD_API_URL = 'https://book-of-vouchers.herokuapp.com/api/v1/sign_up/admin';
 
 }]);

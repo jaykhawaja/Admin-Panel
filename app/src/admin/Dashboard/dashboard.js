@@ -12,23 +12,23 @@ angular.module('myApp.adminDashboard', ['ngRoute'])
     controller: 'adminDashboardCtrl'
   });
 }])
-.controller('adminDashboardCtrl', ['$scope', '$window', 'adminDashboardService', 'authService', function($scope, $window, adminDashboardService, authService) {
-   
- 
-   $scope.success = "";
-   $scope.error = "";
+.controller('adminDashboardCtrl', [ '$scope', '$window', 'adminDashboardService', 'deleteVoucherService','authService', function( $scope, $window, adminDashboardService, deleteVoucherService, authService) {
+
     // todo: test its
     // TDODO: add token interceptor
-     if (!!!authService.isUserLoggedIn()) {
+     if (authService.isUserLoggedIn() === false) {
        $window.location.href = "#!/login";
     };
+
+   $scope.success = "";
+   $scope.error = "";
     
 
   // Stores the vouchers for display
-   $scope.voucherList;
+   $scope.voucherList = "";
 
-   var getVouchers  = function() {
-   		
+   var getVouchers  = function() {  
+    
       adminDashboardService.getVouchers()
       .success(function(res, headers, status, config){
 
@@ -47,12 +47,13 @@ angular.module('myApp.adminDashboard', ['ngRoute'])
       })
       .error(function(res, headers, status, config){
          if (res.status === false) {
-             $scope.error = "Unable to load vouchers. Please try later!"
+             $scope.error = "Unable to load vouchers. Please try later!";
          }
       });
    }
 
    getVouchers();
+
 
    $scope.redirectToAddVoucher = function () {
    	 $window.location.href = "#!/add_voucher";  
@@ -74,29 +75,100 @@ angular.module('myApp.adminDashboard', ['ngRoute'])
     return $window.location.href = "#!/edit_voucher";
    };
 
-}])
-.service('adminDashboardService', [ '$http', '$window', function ($http, $window){
 
-this.getVouchers = function () 
-{
-	
-  return $http.get(GET_VOUCHERS_API_URL, URLheaders);
+// BOOTSTRAP TABLE FORMATTER AND EVENTS
+// Reference : http://bootstrap-table.wenzhixin.net.cn/documentation/#table-options
 
+var elementId = "";
+$('.table').on('click-row.bs.table', function(row, $element, field){
+  // console.log('table row clicked', row);
+  // console.log('table row element', $element);
+  console.log('table row element id', $element.id);
+  elementId = $element.id;
+})
+
+  $scope.editFormatter = function() {
+    return [
+        '<a class="edit btn btn-default btn-sm" >',
+        '<span class="glyphicon glyphicon-pencil"></span>',
+        '</a>'
+    ].join('');
+ }
+
+   $scope.deleteFormatter = function() {
+    return [
+        '<a class="delete btn btn-danger btn-sm" >',
+        '<span class="glyphicon glyphicon-trash"></span>',
+        '</a>'
+    ].join('');
+ }
+
+
+
+ $window.editEvent = {
+    'click .edit': function (e, value, row) {
+        console.log('Edit events');
+      
+        console.log('row', row.id);
+    }
 };
 
-var URLheaders = {
+ $window.deleteEvent = {
+    'click .delete': function (e, value, row) {
+        console.log('Delete events');
+       
+        console.log('row', row.id);
+        var voucherId = row.id;
+        var deleteModel = {
+            id : voucherId
+        };
 
-        /**@const */    
+      deleteVoucherService.delete(deleteModel)
+      .success(function(res, status, headers, config){
+        console.log('res success', res);
+        console.log('voucher succesfully deleted');
+        //todo remove row id
+      })
+      .error(function(res, status, headers, config){
+        console.log('res success', res);
+        console.log('there was a problem deleting the voucher');
+     });
+    }
+};
+
+
+
+// END BOOTSTRAP TABLE CONFIG
+
+
+}])
+.service('adminDashboardService', ['$http', '$window', 'authService', function ( $http, $window, authService){
+
+var SESSION_TOKEN, SOURCE_ID, GET_VOUCHERS_API_URL, URL_HEADERS;
+
+GET_VOUCHERS_API_URL = 'https://book-of-vouchers.herokuapp.com/api/v1/admin/vouchers';
+SESSION_TOKEN = authService.getToken();
+SOURCE_ID = authService.getSourceId();
+
+console.log('SESSION_TOKEN', SESSION_TOKEN);
+console.log('SOURCE_ID', SOURCE_ID);
+
+URL_HEADERS = {
+  
         headers: 
         { 
             'Content-Type': 'application/json',
-            'token': $window.sessionStorage['token'],
-            'source_id': $window.sessionStorage['source_id']
+            'token': SESSION_TOKEN,
+            'source_id':  SOURCE_ID 
         }
         
      };
 
-var GET_VOUCHERS_API_URL = 'https://book-of-vouchers.herokuapp.com/api/v1/admin/vouchers';
+this.getVouchers = function () 
+{
+  return $http.get(GET_VOUCHERS_API_URL, URL_HEADERS);
+
+};
 
 
 }]);

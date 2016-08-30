@@ -17,8 +17,9 @@ angular.module('myApp.addVoucher', ['ngRoute'])
       .set("upload_preset", "pocovtmu");
 
 }])
-.controller('addVoucherFormCtrl', ['$scope', '$rootScope' ,'$window', '$timeout' , 'authService', 'Upload', 'cloudinary', 'addVoucherService', function($scope, $rootScope, $window, $timeout,  authService, Upload, cloudinary, addVoucherService) {
+.controller('addVoucherFormCtrl', ['$scope' ,'$window', '$timeout' , 'authService', 'Upload', 'cloudinary', 'addVoucherService', function($scope, $window, $timeout, authService, Upload, cloudinary, addVoucherService) {
 
+        
          if (!!!authService.isUserLoggedIn()) {
 	         $window.location.href = "#!/login";
 		    };
@@ -136,38 +137,46 @@ angular.module('myApp.addVoucher', ['ngRoute'])
 
 
 }])
-.service('addVoucherService', ['$http', '$window', function($http, $window) {
+.service('addVoucherService', ['$http', '$window', 'authService', function($http, $window, authService) {
+  var SESSION_TOKEN, SOURCE_ID, ADD_VOUCHER_URL, ADD_VOUCHER_URL_URLheaders;
   
-  this.addVoucher = function(model) {
-    return $http.put(ADD_VOUCHER_URL, model, ADD_VOUCHER_URL_URLheaders );
-  }
-  var ADD_VOUCHER_URL = "https://book-of-vouchers.herokuapp.com/api/v1/admin/add_voucher";
-  var ADD_VOUCHER_URL_URLheaders = {
+  SESSION_TOKEN = authService.getToken();
+  SOURCE_ID = authService.getSourceId();
+
+  ADD_VOUCHER_URL = "https://book-of-vouchers.herokuapp.com/api/v1/admin/add_voucher";
+  ADD_VOUCHER_URL_URLheaders = {
 
         /**@const */    
         headers: 
         { 
             'Content-Type': "application/json",
-            'token': $window.sessionStorage['token'],
-            'source_id': $window.sessionStorage['source_id']
+            'token': SESSION_TOKEN,
+            'source_id': SOURCE_ID
         }
         
      };
 
-  this.getBrands = function () {
-    return $http.get(GET_BRANDS_URL, GET_BRANDS_URLheaders);
-  };
+  this.addVoucher = function(model) {
+    return $http.put(ADD_VOUCHER_URL, model, ADD_VOUCHER_URL_URLheaders );
+  }
 
-  var GET_BRANDS_URLheaders = {
+
+  var GET_BRANDS_URL, GET_BRANDS_URLheaders; 
+  
+  GET_BRANDS_URL = 'https://book-of-vouchers.herokuapp.com/api/v1/admin/brands';
+  GET_BRANDS_URLheaders = {
 
         /**@const */    
         headers: 
         { 
-            'token': $window.sessionStorage['token'],
-            'source_id': $window.sessionStorage['source_id']
+            'token': SESSION_TOKEN,
+            'source_id': SOURCE_ID
         }
         
      };
 
-  var GET_BRANDS_URL = 'https://book-of-vouchers.herokuapp.com/api/v1/admin/brands';
+    this.getBrands = function () {
+      return $http.get(GET_BRANDS_URL, GET_BRANDS_URLheaders);
+    };
+    
 }])

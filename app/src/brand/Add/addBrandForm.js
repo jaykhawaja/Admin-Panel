@@ -39,6 +39,8 @@ angular.module('myApp.addBrand', ['ngRoute'])
       
 
   $scope.uploadFile = function (files) {
+
+    console.log('brand model', $scope.brandModel);
    
    $scope.files = files;
     if(!$scope.files) return;
@@ -104,22 +106,30 @@ angular.module('myApp.addBrand', ['ngRoute'])
 
 
 }])
-.service('addBrandService', [ '$http', '$window', function ($http, $window){
+.service('addBrandService', [ '$http', '$window', 'authService',function ($http, $window, authService){
 
-  this.addBrand = function (model) {
-    return $http.put(ADD_BRAND_URL, model, ADD_BRAND_URL_URLheaders)
-  };
 
-  var ADD_BRAND_URL = "https://book-of-vouchers.herokuapp.com/api/v1/admin/add_brand";
-  var ADD_BRAND_URL_URLheaders = {
+var SESSION_TOKEN, SOURCE_ID, ADD_BRAND_API_URL, URL_HEADERS;
+
+ADD_BRAND_API_URL = "https://book-of-vouchers.herokuapp.com/api/v1/admin/add_brand";
+SESSION_TOKEN = authService.getToken();
+SOURCE_ID = authService.getSourceId();
+
+
+  var URL_HEADERS = {
 
         /**@const */    
         headers: 
         { 
             'Content-Type': "application/json",
-            'token': $window.sessionStorage['token'],
-            'source_id': $window.sessionStorage['source_id']
+            'token': SESSION_TOKEN,
+            'source_id': SOURCE_ID
         }
         
      };
+
+    this.addBrand = function (model) {
+      return $http.put(ADD_BRAND_API_URL, model, URL_HEADERS)
+  };
+
 }])

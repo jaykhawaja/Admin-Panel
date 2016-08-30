@@ -4,7 +4,7 @@
 * @todo: add ng sanitize
 * @fileoverview - Holds the logic for login controller.
 */
-'use strict';
+"use strict";
 
 angular.module('myApp.adminLogin', ['ngRoute'])
 .config(['$routeProvider', function($routeProvider) {
@@ -13,9 +13,9 @@ angular.module('myApp.adminLogin', ['ngRoute'])
     controller: 'LoginCtrl'
   });
 }])
-.controller('LoginCtrl', ['$scope', '$http', '$window','loginControllerService', 'authService', function($scope, $http, $window, loginControllerService, authService) {
+.controller('LoginCtrl', ['$scope',  '$http', '$window', '$localStorage','loginControllerService', 'authService',  function($scope, $http, $window, $localStorage,loginControllerService, authService) {
 		
- 		
+ 		$scope.$storage = $localStorage;
 		/*
 		* Model to store and send login data
 		*/
@@ -37,24 +37,26 @@ angular.module('myApp.adminLogin', ['ngRoute'])
 
 
 						if (angular.isObject(res)) {
-						  if (res.status == true) {
-		                	 $window.sessionStorage['token'] = res.data.token;
-		                	 $window.sessionStorage['source_id'] = res.data.source_id;
-				            $http.defaults.headers.common['Authorization'] = 'Bearer ' + $window.sessionStorage['token'];
+						  if (res.status === true) {
+		                	 $scope.$storage.token = res.data.token;	
+		                	 $scope.$storage.source_id = res.data.source_id;
+		                	 // $localStorage.token = res.data.token;	
+		                	 // $localStorage.source_id = res.data.source_id;
+				            // $http.defaults.headers.common['Authorization'] = 'Bearer ' + $window.sessionStorage['token'];
 			                 authService.isLoggedIn = true;
 		                     $window.location.href = '#!/dashboard';
 						 		
-						  };
+						  }
 					  }
 					})
 					.error(function(res, headers, status, config){
 
 						if (angular.isObject(res)) {
-							if (res.status == false) {
+							if (res.status === false) {
 								var msg = res.message || ""; 
 									$scope.error = msg;
-							};
-						};
+							}
+						}
 					});	
 			  }
 			};
@@ -64,7 +66,7 @@ angular.module('myApp.adminLogin', ['ngRoute'])
      
 	this.login = function (model){
 	  // console.log('login service with model', model);
- 	 	return $http.post(LOGIN_API_URL, model, URLheaders)
+ 	 	return $http.post(LOGIN_API_URL, model, URLheaders);
   };
 
 	var URLheaders = {

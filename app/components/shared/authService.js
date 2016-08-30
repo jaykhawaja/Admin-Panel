@@ -1,30 +1,35 @@
-'use strict';
+"use strict";
 
 angular.module('myApp.auth', [])
-.controller('authController', [ '$scope','$window', 'authService', function ($scope, $window, authService) {
+.controller('authController', [ '$scope','$window', '$localStorage', 'authService', function ($scope, $window, $localStorage, authService) {
   
   $scope.logout = function () {
-  	console.log(authService.isUserLoggedIn() );
-  	console.log('logging out user');
-  	authService.logOut;
- 	$window.sessionStorage.clear();
-  	$window.location.href="#!/login";
+    authService.logOut();
+    delete $localStorage.token;    
+    delete $localStorage.source_id;    
+    $window.location.href="#!/login";
   };
 
 }])
-.service('authService', [ '$window', function($window){
+.service('authService', ['$rootScope' ,'$localStorage',  function($rootScope, $localStorage){
+
 
   this.isLoggedIn = false;
-
   this.getToken = function () {
-  	 return $window.sessionStorage['token'];
-  }
+      console.log('LOCAL STORAGE TOKEN', $localStorage.token);
+     return $localStorage.token;
+  };
+
+  this.getSourceId = function () {
+    console.log('local storage SOURCE ID', $localStorage.source_id);
+     return $localStorage.source_id;
+  };
 
   this.isUserLoggedIn = function () {
   	var token = this.getToken();
   	if (token) {
-  		this.isLoggedIn = true
-  		return true;
+  		  this.isLoggedIn = true;
+  		  return true;
     	} else {
   		return false;
   	}      

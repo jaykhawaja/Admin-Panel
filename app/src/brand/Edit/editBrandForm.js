@@ -1,4 +1,4 @@
-'use strict';
+"use strict";
 
 angular.module('myApp.editBrand', ['ngRoute'])
 
@@ -12,7 +12,7 @@ angular.module('myApp.editBrand', ['ngRoute'])
 .controller('editBrandFormCtrl', ['$scope', 'editBrandService', function($scope, editBrandService) {
 	 $scope.edit = function () {
 	 	editBrandService.edit();
-	 }
+	 };
 }])
 .service('editBrandService', [ '$http', function ($http){
 

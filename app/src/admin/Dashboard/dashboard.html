@@ -59,7 +59,8 @@
 						    <thead>
 						    <tr>
 						    	
-						        <th data-field="featured" data-checkbox="true" >Featured</th>
+						        <!-- <th data-field="" data-checkbox="true" >Select</th> -->
+						        <th data-field="featured" >Featured</th>
 						        <th data-field="brand.name" data-sortable="true">Brand Name</th>
 						        <th data-field="product.name" data-sortable="true">Product Title</th>
 						        <th data-field="product.description"  data-sortable="true">Description</th>
@@ -71,7 +72,9 @@
 						        <!-- <th data-field="" data-sortable="true">Brand Logo</th>  -->
 						        <th data-field="category" data-sortable="true">Category</th>
 						        <th data-field="city" data-sortable="true">City</th>
-						    	
+						        <th data-field="id" data-visible="false">ID</th>
+						        <th data-events="editEvent" data-formatter="{{editFormatter()}}">Edit</th>
+						        <th data-events="deleteEvent" data-formatter="{{deleteFormatter()}}">Delete</th>
 						    </tr>
 						    </thead>
 
