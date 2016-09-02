@@ -17,12 +17,14 @@ angular.module('myApp.auth', [])
   this.isLoggedIn = false;
   this.getToken = function () {
       console.log('LOCAL STORAGE TOKEN', $localStorage.token);
-     return $localStorage.token;
+      var token = $localStorage.token || undefined;
+     return token;
   };
 
   this.getSourceId = function () {
     console.log('local storage SOURCE ID', $localStorage.source_id);
-     return $localStorage.source_id;
+     var source_id = $localStorage.source_id || undefined;
+     return source_id;
   };
 
   this.isUserLoggedIn = function () {

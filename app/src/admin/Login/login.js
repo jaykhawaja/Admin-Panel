@@ -66,7 +66,7 @@ angular.module('myApp.adminLogin', ['ngRoute'])
      
 	this.login = function (model){
 	  // console.log('login service with model', model);
- 	 	return $http.post(LOGIN_API_URL, model, URLheaders);
+ 	 	return $http.post(LOGIN_API_URL, model);
   };
 
 	var URLheaders = {

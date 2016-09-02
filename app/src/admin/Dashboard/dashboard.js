@@ -104,7 +104,6 @@ $('.table').on('click-row.bs.table', function(row, $element, field){
  }
 
 
-
  $window.editEvent = {
     'click .edit': function (e, value, row) {
         console.log('Edit events');
@@ -113,26 +112,82 @@ $('.table').on('click-row.bs.table', function(row, $element, field){
     }
 };
 
+//delete row e.g.
+// $table.bootstrapTable('remove', {
+   // field: 'name', 
+   // ids: [ids]
+//     });
+
  $window.deleteEvent = {
     'click .delete': function (e, value, row) {
-        console.log('Delete events');
+        $scope.success = "";
+        $scope.error = "";
+
+        console.log('Delete events',e );
+        console.log('Delete events', value);
+        console.log('Delete events', row);
        
         console.log('row', row.id);
+        
         var voucherId = row.id;
-        var deleteModel = {
+        var deleteModel = { 
+          data : { 
+            "id" : voucherId
+          }
+        };
+
+        $('.table').bootstrapTable('remove', {
+          field: 'id', 
+          values: [voucherId]
+        });
+
+      deleteVoucherService.deleteVoucher(deleteModel)
+      .success(function(res, status, headers, config){
+        console.log('res success', res);
+        if (res.status === true) {
+        $scope.success = "Vocher has been successfully deleted";
+          } else {
+            $scope.error = res.message;
+          }
+      })
+      .error(function(res, status, headers, config){
+        console.log('res error', res);
+        if(res.status === false) {
+           $scope.error = res.message;
+        } else {
+           $scope.error = "Oops, there seems to be an error removing the voucher. Please try again later!";
+        }
+     });
+    }
+};
+
+ $window.editEvent = {
+    'click .edit': function (e, row) {
+        console.log('Edit events',e );
+        console.log('Edit events', row);
+       
+        console.log('row', row.id);
+        
+        var voucherId = row.id;
+        var editModel = {
             id : voucherId
         };
 
-      deleteVoucherService.delete(deleteModel)
-      .success(function(res, status, headers, config){
-        console.log('res success', res);
-        console.log('voucher succesfully deleted');
-        //todo remove row id
-      })
-      .error(function(res, status, headers, config){
-        console.log('res success', res);
-        console.log('there was a problem deleting the voucher');
-     });
+        $('.table').bootstrapTable('remove', {
+          field: 'id', 
+          ids: [voucherId]
+        });
+
+     //  deleteVoucherService.delete(deleteModel)
+     //  .success(function(res, status, headers, config){
+     //    console.log('res success', res);
+     //    console.log('voucher succesfully deleted');
+     //    //todo remove row id
+     //  })
+     //  .error(function(res, status, headers, config){
+     //    console.log('res success', res);
+     //    console.log('there was a problem deleting the voucher');
+     // });
     }
 };
 
@@ -166,9 +221,10 @@ URL_HEADERS = {
 
 this.getVouchers = function () 
 {
-  return $http.get(GET_VOUCHERS_API_URL, URL_HEADERS);
+  return $http.get(GET_VOUCHERS_API_URL);
 
 };
+
 
 
 }]);

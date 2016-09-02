@@ -81,9 +81,16 @@ angular.module('myApp.addVoucher', ['ngRoute'])
               file: file
             };
 
+            var HEADER = {
+                    'Content-Type': undefined,
+                    'token': undefined,
+                    'source_id': undefined
+            }
+
               file.upload = Upload.upload({
                   url:  IMAGE_ADD_API_URL,
-                  data: CLOUDINARY_DATA
+                  data: CLOUDINARY_DATA,
+                  headers: HEADER
               });         
 
              file.upload.then(function (response) {

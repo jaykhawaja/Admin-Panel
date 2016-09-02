@@ -6,6 +6,7 @@ angular.module('myApp', [
   'ngStorage',
   'ngFileUpload',
   'myApp.auth',
+  'myApp.tokenInterceptor',
   'cloudinary',
   'myApp.adminLogin',
   'myApp.adminDashboard',
@@ -17,8 +18,10 @@ angular.module('myApp', [
   'myApp.editBrand',
   'myApp.version'
 ])
-.config(['$locationProvider', '$routeProvider', function($locationProvider, $routeProvider) {
+.config(['$locationProvider', '$routeProvider', '$httpProvider',function($locationProvider, $routeProvider, $httpProvider) {
   $locationProvider.hashPrefix('!');
 
   $routeProvider.otherwise({redirectTo: '/login'});
+
+  $httpProvider.interceptors.push('myHttpInterceptor');
 }]);

@@ -59,7 +59,7 @@ var SESSION_TOKEN, SOURCE_ID, ADMIN_ADD_API_URL, ADD_ADMIN_URLheaders;
 
 this.add = function (model) 
 {
-      return $http.post(ADMIN_ADD_API_URL, model, ADD_ADMIN_URLheaders);
+      return $http.post(ADMIN_ADD_API_URL, model);
 };
 
 var ADD_ADMIN_URLheaders = {

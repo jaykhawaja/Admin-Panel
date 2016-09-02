@@ -129,7 +129,7 @@ SOURCE_ID = authService.getSourceId();
      };
 
     this.addBrand = function (model) {
-      return $http.put(ADD_BRAND_API_URL, model, URL_HEADERS)
+      return $http.put(ADD_BRAND_API_URL, model)
   };
 
 }])
