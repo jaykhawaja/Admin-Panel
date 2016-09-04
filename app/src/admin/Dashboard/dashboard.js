@@ -12,12 +12,15 @@ angular.module('myApp.adminDashboard', ['ngRoute'])
     controller: 'adminDashboardCtrl'
   });
 }])
-.controller('adminDashboardCtrl', [ '$scope', '$location', '$window', '$sessionStorage', '$localStorage','adminDashboardService', 'deleteVoucherService','authService', function( $scope, $location, $window, $sessionStorage, $localStorage ,adminDashboardService, deleteVoucherService, authService) {
+.controller('adminDashboardCtrl', [ '$q','$scope', '$location', '$window', '$sessionStorage', '$localStorage','adminDashboardService', 'deleteVoucherService','authService', function( $q,$scope, $location, $window, $sessionStorage, $localStorage ,adminDashboardService, deleteVoucherService, authService) {
 
    $scope.success = "";
    $scope.error = "";
+   $scope.editFormatter = "";
+   $scope.deleteFormatter = "";
    $scope.voucherList = ""; // Stores the vouchers for display
-     
+   var vouchersLoaded = false;
+
    if (authService.isUserLoggedIn() === false) {
        $window.location.href = "#!/login";
     };
@@ -25,6 +28,7 @@ angular.module('myApp.adminDashboard', ['ngRoute'])
 
     
    var getVouchers  = function() {  
+      var deferedLoad = $q.defer(); // defer edit and delete btn until data loads
 
       var successGetVouchersResponse = function (res) {
         console.log('res success', res);
@@ -40,7 +44,9 @@ angular.module('myApp.adminDashboard', ['ngRoute'])
                $('.table').bootstrapTable({
                     data: response.data.vouchers
               }); 
-              
+
+              deferedLoad.resolve();
+
             } else {
                $scope.success = "0 vouchers returned";
             }
@@ -51,15 +57,52 @@ angular.module('myApp.adminDashboard', ['ngRoute'])
         var response = res.data;
           if (response.status === false) {
              $scope.error = "Unable to load vouchers. Please try later!";
+              deferedLoad.reject();
          }
       };
     
       adminDashboardService.getVouchers()
       .then(successGetVouchersResponse, errorGetVouchersResponse);
 
+      return deferedLoad.promise;
    }
 
-   getVouchers();
+   getVouchers()
+   .then(function(){
+          $scope.editFormatter = function() {
+        return [
+            '<a class="edit btn btn-default btn-sm" >',
+            '<span class="glyphicon glyphicon-pencil"></span>',
+            '</a>'
+        ].join('');
+     }
+
+       $scope.deleteFormatter = function() {
+        return [
+            '<a class="delete btn btn-danger btn-sm" >',
+            '<span class="glyphicon glyphicon-trash"></span>',
+            '</a>'
+        ].join('');
+     }
+   })
+
+     // todo, defer this to when voucher are loaded
+
+  $scope.editFormatter = function() {
+    return [
+        '<a class="edit btn btn-default btn-sm" >',
+        '<span class="glyphicon glyphicon-pencil"></span>',
+        '</a>'
+    ].join('');
+ }
+
+   $scope.deleteFormatter = function() {
+    return [
+        '<a class="delete btn btn-danger btn-sm" >',
+        '<span class="glyphicon glyphicon-trash"></span>',
+        '</a>'
+    ].join('');
+ }
 
 
    $scope.redirectToAddVoucher = function () {
@@ -87,21 +130,6 @@ angular.module('myApp.adminDashboard', ['ngRoute'])
 // Reference : http://bootstrap-table.wenzhixin.net.cn/documentation/#table-options
 
 
-  $scope.editFormatter = function() {
-    return [
-        '<a class="edit btn btn-default btn-sm" >',
-        '<span class="glyphicon glyphicon-pencil"></span>',
-        '</a>'
-    ].join('');
- }
-
-   $scope.deleteFormatter = function() {
-    return [
-        '<a class="delete btn btn-danger btn-sm" >',
-        '<span class="glyphicon glyphicon-trash"></span>',
-        '</a>'
-    ].join('');
- }
 
 
 
@@ -172,14 +200,14 @@ var GET_VOUCHERS_API_URL, GET_VOUCHERS_CONFIG;
 
 GET_VOUCHERS_API_URL = 'https://book-of-vouchers.herokuapp.com/api/v1/admin/vouchers';
 
-GET_VOUCHERS_CONFIG = {
-  cache : true
-}
+// GET_VOUCHERS_CONFIG = {
+//   cache : true
+// }
 
 
 this.getVouchers = function () 
 {
-  return $http.get(GET_VOUCHERS_API_URL, GET_VOUCHERS_CONFIG );
+  return $http.get(GET_VOUCHERS_API_URL );
 
 };
 

@@ -98,6 +98,11 @@ angular.module('myApp.addVoucher', ['ngRoute'])
                   file.result = response.data;
                   $scope.VoucherDataModel.image.id = response.data.public_id;
                   $scope.VoucherDataModel.image.url = response.data.secure_url;
+                  console.log('image id', 
+                  $scope.VoucherDataModel.image.id);
+                  console.log('image url', 
+                  $scope.VoucherDataModel.image.url);
+                  
                 });
               }, function (response) {
                   $scope.error = response.status + ': Sorry, cannot upload image at the moment. Please try later';

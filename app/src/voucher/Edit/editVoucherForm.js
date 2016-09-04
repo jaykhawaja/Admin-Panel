@@ -21,27 +21,32 @@ angular.module('myApp.editVoucher', ['ngRoute'])
     };
 
 
-	$scope.editVoucherModel = {};
 	$scope.$storage = $localStorage;
 	$scope.success = "";
 	$scope.error = "";
 	$scope.brands = "";
 	$scope.files = "";
 	$scope.loading = true;
+	$scope.editVoucherModel = {};
+	// $scope.editVoucherModel.image = {};
+	// $scope.editVoucherModel.image.id = "";
+	// $scope.editVoucherModel.image.url = "";
+
 
 	// GET EDIT VOUCHER DETAILS
 	var voucherId = $sessionStorage.editVoucherId || undefined;
 	var retrievedVouchers = $scope.$storage.vouchers || undefined;
+	$scope.editVoucherModel.id = voucherId; 
 	console.log('edit voucher id is', voucherId);
-	console.log(voucherId);
+
 
 	console.log('retrieving vouchers', retrievedVouchers);
 
-		if (retrievedVouchers) {
-			console.log('retreived vouchers are', retrievedVouchers);
-			$scope.editVoucherModel.voucher = editVoucherService.extractVoucherById(voucherId, retrievedVouchers);
-			$scope.files = $scope.editVoucherModel.voucher.product.image;
-		}
+	if (retrievedVouchers) {
+		$scope.editVoucherModel.voucher = editVoucherService.extractVoucherById(voucherId, retrievedVouchers);
+		$scope.files = $scope.editVoucherModel.voucher.product.image;
+		// $scope.editVoucherModel.image.url = $scope.editVoucherModel.voucher.product.image;
+	}
 	
 	var newModel = {
 		id: voucherId
@@ -59,7 +64,7 @@ angular.module('myApp.editVoucher', ['ngRoute'])
 			console.log('err res', res);
 	
 		})
-		// delete $sessionStorage.voucherId;
+		delete $sessionStorage.voucherId;
 	}
 
 	   //GET BRANDS
@@ -114,6 +119,7 @@ angular.module('myApp.editVoucher', ['ngRoute'])
              file.upload.then(function (response) {
                 $timeout(function () {  
                   file.result = response.data;
+                  $scope.editVoucherModel.image  = {};
                   $scope.editVoucherModel.image.id = response.data.public_id;
                   $scope.editVoucherModel.image.url = response.data.secure_url;
                 });
