@@ -12,44 +12,51 @@ angular.module('myApp.adminDashboard', ['ngRoute'])
     controller: 'adminDashboardCtrl'
   });
 }])
-.controller('adminDashboardCtrl', [ '$scope', '$window', 'adminDashboardService', 'deleteVoucherService','authService', function( $scope, $window, adminDashboardService, deleteVoucherService, authService) {
-
-    // todo: test its
-    // TDODO: add token interceptor
-     if (authService.isUserLoggedIn() === false) {
-       $window.location.href = "#!/login";
-    };
+.controller('adminDashboardCtrl', [ '$scope', '$location', '$window', '$sessionStorage', '$localStorage','adminDashboardService', 'deleteVoucherService','authService', function( $scope, $location, $window, $sessionStorage, $localStorage ,adminDashboardService, deleteVoucherService, authService) {
 
    $scope.success = "";
    $scope.error = "";
+   $scope.voucherList = ""; // Stores the vouchers for display
+     
+   if (authService.isUserLoggedIn() === false) {
+       $window.location.href = "#!/login";
+    };
+
+
     
-
-  // Stores the vouchers for display
-   $scope.voucherList = "";
-
    var getVouchers  = function() {  
-    
-      adminDashboardService.getVouchers()
-      .success(function(res, headers, status, config){
 
-         if (res.status === true) {
-            if (res.data.vouchers.length > 0) {
-               $scope.voucherList = res.data.vouchers;
+      var successGetVouchersResponse = function (res) {
+        console.log('res success', res);
+        var response = res.data;
+        if (response.status === true) {
+            if (response.data.vouchers.length > 0) {
+                var vouchers = response.data.vouchers;
+              
+                $scope.voucherList = vouchers;
+                $localStorage.vouchers = vouchers;
+                $window.localStorage['vouchers'] = vouchers;
+               
                $('.table').bootstrapTable({
-                    data: res.data.vouchers
+                    data: response.data.vouchers
               }); 
-               console.log('res vouchers', res.data.vouchers);
+              
             } else {
                $scope.success = "0 vouchers returned";
             }
          }
-      
-      })
-      .error(function(res, headers, status, config){
-         if (res.status === false) {
+      };
+
+      var errorGetVouchersResponse = function (res) {
+        var response = res.data;
+          if (response.data.status === false) {
              $scope.error = "Unable to load vouchers. Please try later!";
          }
-      });
+      };
+    
+      adminDashboardService.getVouchers()
+      .then(successGetVouchersResponse, errorGetVouchersResponse);
+
    }
 
    getVouchers();
@@ -79,13 +86,6 @@ angular.module('myApp.adminDashboard', ['ngRoute'])
 // BOOTSTRAP TABLE FORMATTER AND EVENTS
 // Reference : http://bootstrap-table.wenzhixin.net.cn/documentation/#table-options
 
-var elementId = "";
-$('.table').on('click-row.bs.table', function(row, $element, field){
-  // console.log('table row clicked', row);
-  // console.log('table row element', $element);
-  console.log('table row element id', $element.id);
-  elementId = $element.id;
-})
 
   $scope.editFormatter = function() {
     return [
@@ -104,90 +104,59 @@ $('.table').on('click-row.bs.table', function(row, $element, field){
  }
 
 
- $window.editEvent = {
-    'click .edit': function (e, value, row) {
-        console.log('Edit events');
-      
-        console.log('row', row.id);
-    }
-};
 
-//delete row e.g.
-// $table.bootstrapTable('remove', {
-   // field: 'name', 
-   // ids: [ids]
-//     });
 
- $window.deleteEvent = {
+$window.deleteEvent = {
     'click .delete': function (e, value, row) {
         $scope.success = "";
         $scope.error = "";
 
-        console.log('Delete events',e );
-        console.log('Delete events', value);
-        console.log('Delete events', row);
-       
-        console.log('row', row.id);
-        
         var voucherId = row.id;
         var deleteModel = { 
-          data : { 
-            "id" : voucherId
-          }
+            id : voucherId
         };
 
-        $('.table').bootstrapTable('remove', {
-          field: 'id', 
-          values: [voucherId]
-        });
+      var successDelete = function (res) {
+        var response = res.data;
+        if (response.status === true) {
+           $scope.success = "Vocher has been successfully deleted";
+          
+           $window.alert($scope.success);
+              $('.table').bootstrapTable('remove', {
+                field: 'id', 
+                values: [voucherId]
+              });
+          } else {
+              $scope.error = response.message;
+          }
+      }
+
+      var errorDelete = function (res) {
+        var response = res.data;
+        if(response.status === false) {
+            $scope.error = response.message;
+        } else {
+            $scope.error = "Oops, there seems to be an error removing the voucher. Please try again later!";
+        }
+      }
 
       deleteVoucherService.deleteVoucher(deleteModel)
-      .success(function(res, status, headers, config){
-        console.log('res success', res);
-        if (res.status === true) {
-        $scope.success = "Vocher has been successfully deleted";
-          } else {
-            $scope.error = res.message;
-          }
-      })
-      .error(function(res, status, headers, config){
-        console.log('res error', res);
-        if(res.status === false) {
-           $scope.error = res.message;
-        } else {
-           $scope.error = "Oops, there seems to be an error removing the voucher. Please try again later!";
-        }
-     });
+      .then(successDelete, errorDelete)
+
     }
 };
 
  $window.editEvent = {
-    'click .edit': function (e, row) {
-        console.log('Edit events',e );
-        console.log('Edit events', row);
-       
-        console.log('row', row.id);
+    'click .edit': function (e, value, row) {
+        console.log('Edit event e',e );
         
-        var voucherId = row.id;
-        var editModel = {
-            id : voucherId
-        };
+        var voucherId = row.id || null;
 
-        $('.table').bootstrapTable('remove', {
-          field: 'id', 
-          ids: [voucherId]
-        });
 
-     //  deleteVoucherService.delete(deleteModel)
-     //  .success(function(res, status, headers, config){
-     //    console.log('res success', res);
-     //    console.log('voucher succesfully deleted');
-     //    //todo remove row id
-     //  })
-     //  .error(function(res, status, headers, config){
-     //    console.log('res success', res);
-     //    console.log('there was a problem deleting the voucher');
-     // });
+        console.log('edit id', voucherId);
+    
+        $sessionStorage.editVoucherId = voucherId;
+        $window.location.href = '#!/edit_voucher';
     }
 };
 
@@ -197,31 +166,20 @@ $('.table').on('click-row.bs.table', function(row, $element, field){
 
 
 }])
-.service('adminDashboardService', ['$http', '$window', 'authService', function ( $http, $window, authService){
+.service('adminDashboardService', ['$http', function ( $http){
 
-var SESSION_TOKEN, SOURCE_ID, GET_VOUCHERS_API_URL, URL_HEADERS;
+var GET_VOUCHERS_API_URL, GET_VOUCHERS_CONFIG;
 
 GET_VOUCHERS_API_URL = 'https://book-of-vouchers.herokuapp.com/api/v1/admin/vouchers';
-SESSION_TOKEN = authService.getToken();
-SOURCE_ID = authService.getSourceId();
 
-console.log('SESSION_TOKEN', SESSION_TOKEN);
-console.log('SOURCE_ID', SOURCE_ID);
+GET_VOUCHERS_CONFIG = {
+  cache : true
+}
 
-URL_HEADERS = {
-  
-        headers: 
-        { 
-            'Content-Type': 'application/json',
-            'token': SESSION_TOKEN,
-            'source_id':  SOURCE_ID 
-        }
-        
-     };
 
 this.getVouchers = function () 
 {
-  return $http.get(GET_VOUCHERS_API_URL);
+  return $http.get(GET_VOUCHERS_API_URL, GET_VOUCHERS_CONFIG );
 
 };
 

@@ -1,7 +1,7 @@
 'use strict';
 //TODO: NOT INTEGRATED / IMPLEMENTED
 angular.module('myApp.tokenInterceptor', [])
-.factory('myHttpInterceptor', ['$q', 'authService', function($q, authService) {
+.factory('myHttpInterceptor', ['$q', '$window','authService', '$localStorage', '$sessionStorage',function($q, $window,authService, $localStorage, $sessionStorage) {
   return {
     // optional method
     'request': function(config) {
@@ -25,7 +25,8 @@ angular.module('myApp.tokenInterceptor', [])
     	if (config.url === imageUploadURL)
     	{
     		config.headers['token'] = undefined;	
-    		config.headers['source_id'] = undefined;	
+    		config.headers['source_id'] = undefined;
+        config.headers['Accept'] = undefined;	
     	}
       // do something on success
       return config;
@@ -53,6 +54,10 @@ angular.module('myApp.tokenInterceptor', [])
     // optional method
    'responseError': function(rejection) {
     	console.log('inside responseError', rejection);
+      if (rejection.status === 401) {
+
+        // $window.location.href = '#!/login';
+      }
       // do something on error
       // if (canRecover(rejection)) {
       //   return responseOrNewPromise

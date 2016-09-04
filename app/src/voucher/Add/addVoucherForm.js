@@ -117,6 +117,7 @@ angular.module('myApp.addVoucher', ['ngRoute'])
            .success(function(res, headers, status, config){
               if (res.status === true) {
                   $scope.success = "Voucher has been successfully added!";
+                  $window.alert($scope.success);
                   $window.location.href="#!/dashboard";
               };
            })
