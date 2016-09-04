@@ -49,7 +49,7 @@ angular.module('myApp.adminDashboard', ['ngRoute'])
 
       var errorGetVouchersResponse = function (res) {
         var response = res.data;
-          if (response.data.status === false) {
+          if (response.status === false) {
              $scope.error = "Unable to load vouchers. Please try later!";
          }
       };
