@@ -28,24 +28,51 @@ angular.module('myApp.editVoucher', ['ngRoute'])
 	$scope.files = "";
 	$scope.loading = true;
 	$scope.editVoucherModel = {};
-	// $scope.editVoucherModel.image = {};
-	// $scope.editVoucherModel.image.id = "";
-	// $scope.editVoucherModel.image.url = "";
-
+	// to clean up and organize data to send
+	var reqModel = {
+    "id": "", 
+    "voucher": {
+        "brand": "",
+        "product": {
+            "location": {
+                "coordinates": {
+                    "latitude": "",
+                    "longitude": ""
+                    },
+                "address": ""
+            },
+            "description": "",
+            "name": ""
+        },
+        "valid": "",
+        "expiry": "",
+        "featured": "",
+        "max_redeems": "",
+        "city": "",
+        "category": "",
+        "discount": {
+            "value": "",
+            "symbol": ""
+            }
+        },
+    "image": {
+        "id": "",
+        "url": ""
+    }
+  };
 
 	// GET EDIT VOUCHER DETAILS
 	var voucherId = $sessionStorage.editVoucherId || undefined;
 	var retrievedVouchers = $scope.$storage.vouchers || undefined;
 	$scope.editVoucherModel.id = voucherId; 
-	console.log('edit voucher id is', voucherId);
-
-
-	console.log('retrieving vouchers', retrievedVouchers);
+	$scope.editVoucherModel.image  = {};
+	$scope.editVoucherModel.image.id = "";
+	$scope.editVoucherModel.image.url = "";
+	
 
 	if (retrievedVouchers) {
 		$scope.editVoucherModel.voucher = editVoucherService.extractVoucherById(voucherId, retrievedVouchers);
 		$scope.files = $scope.editVoucherModel.voucher.product.image;
-		// $scope.editVoucherModel.image.url = $scope.editVoucherModel.voucher.product.image;
 	}
 	
 	var newModel = {
@@ -53,8 +80,31 @@ angular.module('myApp.editVoucher', ['ngRoute'])
 	}
 	// SUBMIT EDIT VOUCHER DETAILS
 	$scope.submit = function (model) {
-		var jsonModel = angular.toJson(model);
-		console.log(jsonModel);
+		console.log('SUBMITED MODEL', model);
+		console.log('SUBMITED MODEL', model.voucher.brand.id );
+		reqModel.id = model.id || undefined;
+		reqModel.voucher.brand = model.voucher.brand.id || "";
+		reqModel.voucher.product.location.coordinates.latitude = model.voucher.product.location.coordinates.latitude || "";
+		reqModel.voucher.product.location.coordinates.longitude = model.voucher.product.location.coordinates.longitude || "";
+		reqModel.voucher.product.location.address = model.voucher.product.location.address || "";
+		reqModel.voucher.product.description = model.voucher.product.description || "";
+		reqModel.voucher.product.name = model.voucher.product.name || "";
+		reqModel.voucher.valid = model.voucher.valid || "";
+		reqModel.voucher.expiry = model.voucher.expiry || "";
+		reqModel.voucher.featured = model.voucher.featured || false;
+		reqModel.voucher.max_redeems = model.voucher.max_redeems || "100";
+		reqModel.voucher.city = model.voucher.city || "";
+		reqModel.voucher.category = model.voucher.category || "";
+		reqModel.voucher.discount.value = model.voucher.discount.value || "";
+		reqModel.voucher.discount.symbol = model.voucher.discount.symbol || "";
+		reqModel.image.id = model.image.id || "";
+		reqModel.image.url = model.image.url || "";
+
+		console.log('req model is', reqModel);
+
+
+		var jsonModel = angular.toJson(reqModel); // to clean up 
+		console.log('jsonModel',jsonModel);
 		editVoucherService.edit(jsonModel)
 		.success(function(res, headers, status, config){
 		   console.log('success res', res);
@@ -62,6 +112,9 @@ angular.module('myApp.editVoucher', ['ngRoute'])
 		})
 		.error(function(res, headers, status, config){
 			console.log('err res', res);
+			if (res.status === 401) {
+				$scope.error = "Error: There was a problem saving the voucher.";
+			}
 	
 		})
 		delete $sessionStorage.voucherId;
