@@ -31,7 +31,7 @@ angular.module('myApp.adminDashboard', ['ngRoute'])
       var deferedLoad = $q.defer(); // defer edit and delete btn until data loads
 
       var successGetVouchersResponse = function (res) {
-        console.log('res success', res);
+        // console.log('res success', res);
         var response = res.data;
         if (response.status === true) {
             if (response.data.vouchers.length > 0) {
@@ -176,12 +176,12 @@ $window.deleteEvent = {
 
  $window.editEvent = {
     'click .edit': function (e, value, row) {
-        console.log('Edit event e',e );
+        // console.log('Edit event e',e );
         
         var voucherId = row.id || null;
 
 
-        console.log('edit id', voucherId);
+        // console.log('edit id', voucherId);
     
         $sessionStorage.editVoucherId = voucherId;
         $window.location.href = '#!/edit_voucher';

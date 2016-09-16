@@ -40,7 +40,7 @@ angular.module('myApp.addBrand', ['ngRoute'])
 
   $scope.uploadFile = function (files) {
 
-    console.log('brand model', $scope.brandModel);
+    // console.log('brand model', $scope.brandModel);
    
    $scope.files = files;
     if(!$scope.files) return;
@@ -97,7 +97,7 @@ angular.module('myApp.addBrand', ['ngRoute'])
               };
            })
            .error(function(res, headers, status, config){
-              console.log('error res', res);
+              // console.log('error res', res);
               $scope.error = "Sorry, cannot upload voucher at the moment. Please inform your web amin";
            })
         

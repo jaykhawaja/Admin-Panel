@@ -28,17 +28,17 @@ angular.module('myApp.adminAdd', ['ngRoute'])
     }
 
   	$scope.add = function(model) {
-      console.log('add model', model);
+      // console.log('add model', model);
       if (angular.isObject(model)) {
   		  adminAddService.add(model)
         .success(function(res, headers, status, config) {
-            console.log('success res', res);
+            // console.log('success res', res);
             if (res.status === true) {
                $scope.success = "Admin Successfully added";
             }
         })
         .error(function(res, headers, status, config) {
-          console.log('error res', res);
+          // console.log('error res', res);
           if (res.status === false) {
             $scope.error = "There seems to be problem. Please try again later";
           } else {

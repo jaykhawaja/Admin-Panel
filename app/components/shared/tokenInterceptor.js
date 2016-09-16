@@ -5,7 +5,7 @@ angular.module('myApp.tokenInterceptor', [])
   return {
     // optional method
     'request': function(config) {
-    	console.log('inside interceptor req', config);
+      
     	var token = authService.getToken();
     	var source_id = authService.getSourceId();
 
@@ -34,7 +34,7 @@ angular.module('myApp.tokenInterceptor', [])
 
     // optional method
    'requestError': function(rejection) {
-   	console.log('inside interceptor requestError', rejection);
+   	// console.log('inside interceptor requestError', rejection);
       // do something on error
       // if (canRecover(rejection)) {
       //   return responseOrNewPromise
@@ -46,17 +46,17 @@ angular.module('myApp.tokenInterceptor', [])
 
     // optional method
     'response': function(response) {
-    	console.log('inside interceptor res', response);
+    	// console.log('inside interceptor res', response);
       // do something on success
       return response;
     },
 
     // optional method
    'responseError': function(rejection) {
-    	console.log('inside responseError', rejection);
+    	// console.log('inside responseError', rejection);
       if (rejection.status === 401) {
 
-        // $window.location.href = '#!/login';
+        $window.location.href = '#!/login';
       }
       // do something on error
       // if (canRecover(rejection)) {
