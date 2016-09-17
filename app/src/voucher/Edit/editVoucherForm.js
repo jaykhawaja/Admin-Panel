@@ -117,6 +117,7 @@ angular.module('myApp.editVoucher', ['ngRoute'])
     reqModel2.product.location.coordinates.longitude = model.voucher.product.location.coordinates.longitude || "";
     reqModel2.product.location.address = model.voucher.product.location.address || "";
     reqModel2.product.description = model.voucher.product.description || "";
+    reqModel2.product.name = model.voucher.product.name || "";
     reqModel2.valid = model.voucher.valid || "";
     reqModel2.expiry = model.voucher.expiry || "";
     reqModel2.featured = model.voucher.featured || false;
@@ -129,12 +130,11 @@ angular.module('myApp.editVoucher', ['ngRoute'])
     reqModel2.discount.url = model.image.url || "";
 
 
-
 		var jsonModel = angular.toJson(reqModel2); // to clean up 
-		// console.log('jsonModel',jsonModel);
+
 		editVoucherService.edit(jsonModel)
 		.success(function(res, headers, status, config){
-		   // console.log('success res', res);
+		   console.log('success res', res);
             if (res.status === true) {
                   $scope.success = "Voucher has been successfully edited!";
                   $window.alert($scope.success);
@@ -149,7 +149,7 @@ angular.module('myApp.editVoucher', ['ngRoute'])
 			}
 	
 		})
-		delete $sessionStorage.voucherId;
+		delete $sessionStorage.editVoucherId;
 	 }
   }
 

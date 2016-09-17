@@ -248,7 +248,8 @@
 										<div ng-show="brands.length > 0">
 										<select  
 										class="form-control" 
-										ng-model="VoucherDataModel.voucher.brand">
+										ng-model="VoucherDataModel.voucher.brand"
+										required>
 											
 											<option ng-repeat="brand in brands" value="{{brand.id}}">{{brand.name}} </option>
 										   
