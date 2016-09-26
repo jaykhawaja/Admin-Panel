@@ -29,37 +29,37 @@ angular.module('myApp.editVoucher', ['ngRoute'])
 	$scope.loading = true;
 	$scope.editVoucherModel = {};
 	// to clean up and organize data to send
-	var reqModel = {
-    "id": "", 
-    "voucher": {
-        "brand": "",
-        "product": {
-            "location": {
-                "coordinates": {
-                    "latitude": "",
-                    "longitude": ""
-                    },
-                "address": ""
-            },
-            "description": "",
-            "name": ""
-        },
-        "valid": "",
-        "expiry": "",
-        "featured": "",
-        "max_redeems": "",
-        "city": "",
-        "category": "",
-        "discount": {
-            "value": "",
-            "symbol": ""
-            }
-        },
-    "image": {
-        "id": "",
-        "url": ""
-    }
-  };
+	// var reqModel = {
+ //    "id": "", 
+ //    "voucher": {
+ //        "brand": "",
+ //        "product": {
+ //            "location": {
+ //                "coordinates": {
+ //                    "latitude": "",
+ //                    "longitude": ""
+ //                    },
+ //                "address": ""
+ //            },
+ //            "description": "",
+ //            "name": ""
+ //        },
+ //        "valid": "",
+ //        "expiry": "",
+ //        "featured": "",
+ //        "max_redeems": "",
+ //        "city": "",
+ //        "category": "",
+ //        "discount": {
+ //            "value": "",
+ //            "symbol": ""
+ //            }
+ //        },
+ //    "image": {
+ //        "id": "",
+ //        "url": ""
+ //    }
+ //  };
 
   var reqModel2 = {
   "id": "",
@@ -129,26 +129,33 @@ angular.module('myApp.editVoucher', ['ngRoute'])
     reqModel2.image.id = model.image.id || "";
     reqModel2.discount.url = model.image.url || "";
 
+    //check if new image has been uploaded
+    // if (angular.isObject($scope.editVoucherModel.image)) {
+    //    console.log('model', model);
+    //    console.log('voucher model', $scope.editVoucherModel);
+    //    console.log('voucher model image exists', $scope.editVoucherModel.image);
+    // }
 
-		var jsonModel = angular.toJson(reqModel2); // to clean up 
 
-		editVoucherService.edit(jsonModel)
-		.success(function(res, headers, status, config){
-		   console.log('success res', res);
-            if (res.status === true) {
-                  $scope.success = "Voucher has been successfully edited!";
-                  $window.alert($scope.success);
-                  $window.location.href="#!/dashboard";
-              };
+		// var jsonModel = angular.toJson(reqModel2); // to clean up 
 
-		})
-		.error(function(res, headers, status, config){
-			// console.log('err res', res);
-			if (res.status === 401) {
-				$scope.error = "Error: There was a problem saving the voucher.";
-			}
+		// editVoucherService.edit(jsonModel)
+		// .success(function(res, headers, status, config){
+		//    console.log('success res', res);
+  //           if (res.status === true) {
+  //                 $scope.success = "Voucher has been successfully edited!";
+  //                 $window.alert($scope.success);
+  //                 $window.location.href="#!/dashboard";
+  //             };
+
+		// })
+		// .error(function(res, headers, status, config){
+		// 	// console.log('err res', res);
+		// 	if (res.status === 401) {
+		// 		$scope.error = "Error: There was a problem saving the voucher.";
+		// 	}
 	
-		})
+		// })
 		delete $sessionStorage.editVoucherId;
 	 }
   }
