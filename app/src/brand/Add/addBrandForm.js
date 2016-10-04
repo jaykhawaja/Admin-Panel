@@ -93,12 +93,12 @@ angular.module('myApp.addBrand', ['ngRoute'])
            .success(function(res, headers, status, config){
              
               if (res.status === true) {
-                  $scope.success = "Voucher has been successfully added!";
+                  $scope.success = "Brand has been successfully added!";
               };
            })
            .error(function(res, headers, status, config){
               // console.log('error res', res);
-              $scope.error = "Sorry, cannot upload voucher at the moment. Please inform your web amin";
+              $scope.error = "Sorry, cannot upload brand at the moment. Please inform your web amin";
            })
         
         }
