@@ -168,8 +168,7 @@ $window.deleteEvent = {
         }
       }
 
-      deleteVoucherService.deleteVoucher(deleteModel)
-      .then(successDelete, errorDelete)
+      deleteVoucherService.deleteVoucher(deleteModel).then(successDelete, errorDelete);
 
     }
 };

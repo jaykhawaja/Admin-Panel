@@ -7,11 +7,11 @@ angular.module('myApp.deleteVoucher', ['ngRoute'])
   });
 }])
 .controller('deleteVoucherCtrl', ['$scope', 'deleteVoucherService', function($scope, deleteVoucherService) {
-	console.log('delete voucher loaded');
+	// console.log('delete voucher loaded');
 
 }])
 .service('deleteVoucherService', ['$http', function ($http) {
-
+// console.log('delete voucher service loaded');
 	var DELETE_API_URL, HTTP_CONFIG;
 
 
@@ -19,7 +19,7 @@ angular.module('myApp.deleteVoucher', ['ngRoute'])
 
 
 	this.deleteVoucher = function (model) {
-
+    console.log('delete model', model);
 
      HTTP_CONFIG = {
      	data: model,
