@@ -143,7 +143,7 @@ angular.module('myApp.editVoucher', ['ngRoute'])
     // todo: clear cache
 		editVoucherService.edit(jsonModel)
 		.success(function(res, headers, status, config){
-		   console.log('success res', res);
+		   // console.log('success res', res);
             if (res.status === true) {
               		$sessionStorage.editVoucherId = "";
                   $scope.success = "Voucher has been successfully edited!";
