@@ -137,7 +137,7 @@ angular.module('myApp.editVoucher', ['ngRoute'])
     reqModel2.image.url = model.image.url || "";
 
     
-    console.log('reqModel2', reqModel2);
+    // console.log('reqModel2', reqModel2);
 
 		var jsonModel = angular.toJson(reqModel2); // to clean up 
     // todo: clear cache
